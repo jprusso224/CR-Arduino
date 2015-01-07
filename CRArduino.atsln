@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "CRArduino", "CRArduino\CRArduino.cppproj", "{1D54FFA1-1DFD-41DF-A450-01499B0952DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D54FFA1-1DFD-41DF-A450-01499B0952DF}.Debug|AVR.ActiveCfg = Debug|AVR
+		{1D54FFA1-1DFD-41DF-A450-01499B0952DF}.Debug|AVR.Build.0 = Debug|AVR
+		{1D54FFA1-1DFD-41DF-A450-01499B0952DF}.Release|AVR.ActiveCfg = Release|AVR
+		{1D54FFA1-1DFD-41DF-A450-01499B0952DF}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
