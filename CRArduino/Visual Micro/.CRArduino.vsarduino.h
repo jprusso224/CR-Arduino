@@ -17,11 +17,17 @@ extern "C" void __cxa_pure_virtual() {;}
 
 //
 //
+void backLeftEncoderISR();
+void backRightEncoderISR();
+void frontLeftEncoderISR();
+void frontRightEncoderISR();
 
 #include "C:\Program Files (x86)\Arduino\hardware\arduino\variants\mega\pins_arduino.h" 
 #include "C:\Program Files (x86)\Arduino\hardware\arduino\cores\arduino\arduino.h"
-#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CRArduino\CRArduino\CRArduino.ino"
-#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CRArduino\CRArduino\CRArduinoMain.cpp"
-#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CRArduino\CRArduino\CRArduinoMain.h"
-#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CRArduino\CRArduino\RangeFinder.cpp"
-#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CRArduino\CRArduino\RangeFinder.h"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduino.ino"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.cpp"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.h"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Encoder.cpp"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Encoder.h"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\RangeFinder.cpp"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\RangeFinder.h"

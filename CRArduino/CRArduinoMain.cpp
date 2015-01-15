@@ -6,19 +6,44 @@
  */ 
 
 #include "CRArduinoMain.h"
+#include "Encoder.h"
 #include "RangeFinder.h"
+#include "crconstants.h"
 
 void CRArduinoMain::setup()
 {
-	rangeFinder.initRangeFinder(147,7);
-	Serial.begin(115200);
+	//rangeFinder.initRangeFinder(147,7);
+	backLeftEncoder.initEncoder(0,ENCODER_RESOLUTION);
+	backRightEncoder.initEncoder(1,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(2,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(3,ENCODER_RESOLUTION);
 }
 
 void CRArduinoMain::loop()
 {
-	result = rangeFinder.readRange();
-	Serial.println(result);
-	delay(1000);
+	//result = rangeFinder.readRange();
+	//Serial.println(result);
+	//delay(1000);
+}
+
+
+/**
+ * Encoder interrupt handlers                                                    
+ */
+void CRArduinoMain::backLeftEncoderISR(){
+	backLeftEncoder.encoderISR();
+}
+
+void CRArduinoMain::backRightEncoderISR(){
+	backRightEncoder.encoderISR();
+}
+
+void CRArduinoMain::frontLeftEncoderISR(){
+	frontLeftEncoder.encoderISR();
+}
+
+void CRArduinoMain::frontRightEncoderISR(){
+	frontRightEncoder.encoderISR();
 }
 
 CRArduinoMain crArduinoMain;

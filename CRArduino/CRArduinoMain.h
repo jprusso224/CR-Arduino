@@ -14,14 +14,26 @@
 	#include "WProgram.h"
 #endif
 
+#include "Encoder.h"
+#include "RangeFinder.h"
+
 class CRArduinoMain
 {
  private:
 	int result;
-
+	Encoder backLeftEncoder;
+	Encoder backRightEncoder;
+	Encoder frontLeftEncoder;
+	Encoder frontRightEncoder;
+    
  public:
 	void setup();
 	void loop();
+	void backLeftEncoderISR();
+	void backRightEncoderISR();
+	void frontLeftEncoderISR();
+	void frontRightEncoderISR();
+
 };
 
 extern CRArduinoMain crArduinoMain;

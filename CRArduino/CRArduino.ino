@@ -1,3 +1,4 @@
+#include "Encoder.h"
 #include "RangeFinder.h"
 /*
  * CRArduino.ino
@@ -11,9 +12,27 @@
 void setup()
 {
 	crArduinoMain.setup();
+	attachInterrupt(0,backLeftEncoderISR,HIGH);
 }
 
 void loop()
 {
 	crArduinoMain.loop();
+}
+
+
+/**
+ * Encoder interrupt wrappers                                                    
+ */
+void backLeftEncoderISR(){
+	crArduinoMain.backLeftEncoderISR();
+}
+void backRightEncoderISR(){
+	crArduinoMain.backRightEncoderISR();
+}
+void frontLeftEncoderISR(){
+	crArduinoMain.frontLeftEncoderISR();
+}
+void frontRightEncoderISR(){
+	crArduinoMain.frontRightEncoderISR();
 }
