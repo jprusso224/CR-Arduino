@@ -26,6 +26,10 @@ class CRArduinoMain
 	Encoder frontLeftEncoder;
 	Encoder frontRightEncoder;
     
+	String piInputString;
+	boolean piInputStringComplete;
+	char inChar;
+	
  public:
 	void setup();
 	void loop();
@@ -33,7 +37,11 @@ class CRArduinoMain
 	void backRightEncoderISR();
 	void frontLeftEncoderISR();
 	void frontRightEncoderISR();
-
+	void parseCommand();
+	void processDriveCommand();
+	void processRappelCommand();
+	void processStatusRequest();
+	void blinkLED(int num);
 };
 
 extern CRArduinoMain crArduinoMain;

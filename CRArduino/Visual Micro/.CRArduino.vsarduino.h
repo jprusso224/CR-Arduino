@@ -31,3 +31,4 @@ void frontRightEncoderISR();
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Encoder.h"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\RangeFinder.cpp"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\RangeFinder.h"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\crconstants.h"
