@@ -16,6 +16,7 @@
 
 #include "Encoder.h"
 #include "RangeFinder.h"
+#include "DCMotor.h"
 
 class CRArduinoMain
 {
@@ -25,6 +26,9 @@ class CRArduinoMain
 	Encoder backRightEncoder;
 	Encoder frontLeftEncoder;
 	Encoder frontRightEncoder;
+	
+	DCMotor leftMotor;
+	DCMotor rightMotor;
     
 	String piInputString;
 	boolean piInputStringComplete;

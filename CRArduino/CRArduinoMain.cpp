@@ -18,6 +18,10 @@ void CRArduinoMain::setup()
 	frontLeftEncoder.initEncoder(4,ENCODER_RESOLUTION);
 	frontLeftEncoder.initEncoder(5,ENCODER_RESOLUTION);
 	
+	//DC motors
+	leftMotor.initDCMotor(7,30,31,0);
+	rightMotor.initDCMotor(8,32,33,1);	
+	
 	//setup LED
 	pinMode(13,OUTPUT);
 	inChar = 0;
