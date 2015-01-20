@@ -22,6 +22,10 @@ void CRArduinoMain::setup()
 	leftMotor.initDCMotor(7,30,31,0);
 	rightMotor.initDCMotor(8,32,33,1);	
 	
+	//Servos
+	panServo.attach(9);
+	tiltServo.attach(10);
+	
 	//setup LED
 	pinMode(13,OUTPUT);
 	inChar = 0;
@@ -70,6 +74,9 @@ void CRArduinoMain::parseCommand(){
 		break;
 		case 'D':
 		processDriveCommand();
+		break;
+		case 'I':
+		processImageCommand();
 		break;
 		default:
 		processStatusRequest();
@@ -127,6 +134,22 @@ void CRArduinoMain::frontLeftEncoderISR(){
 
 void CRArduinoMain::frontRightEncoderISR(){
 	frontRightEncoder.encoderISR();
+}
+
+void CRArduinoMain::processImageCommand(){
+	String temp = piInputString.substring(3,4);
+	int pan = temp.toInt();
+	temp = piInputString.substring(5,6);
+	int tilt = temp.toInt();
+	if (piInputString[2] == '+'){
+		pan += 90;
+	}
+	panServo.write(pan); //These values are in angle under 200 but we want to change to ms (1000-2000) for 0-180 deg eventually to be more precise
+	delay(15);
+	tiltServo.write(tilt);
+	delay(15);
+	Serial.print("$IP\n");
+	Serial.flush();
 }
 
 CRArduinoMain crArduinoMain;
