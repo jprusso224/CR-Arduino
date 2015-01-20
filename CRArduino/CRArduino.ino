@@ -1,3 +1,4 @@
+#include "DCMotor.h"
 #include "Encoder.h"
 #include "RangeFinder.h"
 /*
