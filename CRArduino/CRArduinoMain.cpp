@@ -12,19 +12,22 @@
 
 void CRArduinoMain::setup()
 {
-	//rangeFinder.initRangeFinder(147,7);
-	backLeftEncoder.initEncoder(2,ENCODER_RESOLUTION);
-	backRightEncoder.initEncoder(3,ENCODER_RESOLUTION);
-	frontLeftEncoder.initEncoder(4,ENCODER_RESOLUTION);
-	frontLeftEncoder.initEncoder(5,ENCODER_RESOLUTION);
+	//Range-finder
+	rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
+	
+	//Encoders
+	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
 	
 	//DC motors
-	leftMotor.initDCMotor(7,30,31,0);
-	rightMotor.initDCMotor(8,32,33,1);	
+	leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
+	rightMotor.initDCMotor(RIGHT_MOTOR_PWM_PIN,RIGHT_MOTOR_DIR_PIN,RIGHT_MOTOR_EN_PIN,MOTOR_CW);	
 	
 	//Servos
-	panServo.attach(9);
-	tiltServo.attach(10);
+	tiltServo.attach(TILT_SERVO_PIN);
+	panServo.attach(PAN_SERVO_PIN);
 	
 	//setup LED
 	pinMode(13,OUTPUT);
@@ -60,9 +63,6 @@ void CRArduinoMain::loop()
 		}
 	}
 	
-	//result = rangeFinder.readRange();
-	//Serial.println(result);
-	//delay(1000);
 }
 
 void CRArduinoMain::parseCommand(){
@@ -91,8 +91,15 @@ void CRArduinoMain::processDriveCommand(){
 }
 
 void CRArduinoMain::processRappelCommand(){
+		int range;
+		String rangeStr;
+	
 		blinkLED(4);
-		Serial.print("$RP\n");
+		
+		//Read range-finder and store in output string, send to pi
+		range = rangeFinder.readRange();
+		rangeStr = String(range);
+		Serial.print("$RP"+rangeStr+"\n");
 		Serial.flush();
 }
 
@@ -100,6 +107,22 @@ void CRArduinoMain::processStatusRequest(){
 		blinkLED(3);
 		Serial.print("$SP\n");
 		Serial.flush();
+}
+
+void CRArduinoMain::processImageCommand(){
+	String temp = piInputString.substring(3,4);
+	int pan = temp.toInt();
+	temp = piInputString.substring(5,6);
+	int tilt = temp.toInt();
+	if (piInputString[2] == '+'){
+		pan += 90;
+	}
+	panServo.write(pan); //These values are in angle under 200 but we want to change to ms (1000-2000) for 0-180 deg eventually to be more precise
+	delay(15);
+	tiltServo.write(tilt);
+	delay(15);
+	Serial.print("$IP\n");
+	Serial.flush();
 }
 
 /**
@@ -134,22 +157,6 @@ void CRArduinoMain::frontLeftEncoderISR(){
 
 void CRArduinoMain::frontRightEncoderISR(){
 	frontRightEncoder.encoderISR();
-}
-
-void CRArduinoMain::processImageCommand(){
-	String temp = piInputString.substring(3,4);
-	int pan = temp.toInt();
-	temp = piInputString.substring(5,6);
-	int tilt = temp.toInt();
-	if (piInputString[2] == '+'){
-		pan += 90;
-	}
-	panServo.write(pan); //These values are in angle under 200 but we want to change to ms (1000-2000) for 0-180 deg eventually to be more precise
-	delay(15);
-	tiltServo.write(tilt);
-	delay(15);
-	Serial.print("$IP\n");
-	Serial.flush();
 }
 
 CRArduinoMain crArduinoMain;

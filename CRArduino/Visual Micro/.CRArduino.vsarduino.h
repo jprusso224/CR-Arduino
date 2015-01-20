@@ -24,7 +24,6 @@ void frontRightEncoderISR();
 
 #include "C:\Program Files (x86)\Arduino\hardware\arduino\variants\mega\pins_arduino.h" 
 #include "C:\Program Files (x86)\Arduino\hardware\arduino\cores\arduino\arduino.h"
-<<<<<<< HEAD
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduino.ino"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.cpp"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.h"
@@ -37,17 +36,3 @@ void frontRightEncoderISR();
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Servo.cpp"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Servo.h"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\crconstants.h"
-=======
-#include <CRArduino.ino>
-#include <CRArduinoMain.cpp>
-#include <CRArduinoMain.h>
-#include <DCMotor.cpp>
-#include <DCMotor.h>
-#include <Encoder.cpp>
-#include <Encoder.h>
-#include <RangeFinder.cpp>
-#include <RangeFinder.h>
-#include <Servo.cpp>
-#include <Servo.h>
-#include <crconstants.h>
->>>>>>> 81c5a923bc44ca461beb744701e9f41f8328ef8e

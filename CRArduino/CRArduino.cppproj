@@ -35,7 +35,7 @@
   <documentation help="" />
   <offline-documentation help="" />
   <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.10.1" />
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
@@ -61,15 +61,15 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value></Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>C:/Users/Me/Documents/Arduino/libraries</Value>
-      <Value>D:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/John Russo/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>../../CRArduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/variants/mega</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/cores/arduino</Value>
     </ListValues>
@@ -92,15 +92,15 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value></Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>C:/Users/Me/Documents/Arduino/libraries</Value>
-      <Value>D:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/John Russo/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>../../CRArduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/variants/mega</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/cores/arduino</Value>
     </ListValues>
@@ -202,15 +202,15 @@ build.arch=AVR
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value></Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>C:/Users/Me/Documents/Arduino/libraries</Value>
-      <Value>D:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/John Russo/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>../../CRArduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/variants/mega</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/cores/arduino</Value>
     </ListValues>
@@ -233,15 +233,15 @@ build.arch=AVR
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value></Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
       <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>C:/Users/Me/Documents/Arduino/libraries</Value>
-      <Value>D:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/John Russo/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>../../CRArduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/variants/mega</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/cores/arduino</Value>
     </ListValues>
