@@ -10,6 +10,7 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
+	#include "Servo.h"
 #else
 	#include "WProgram.h"
 #endif
@@ -17,6 +18,8 @@
 #include "Encoder.h"
 #include "RangeFinder.h"
 #include "DCMotor.h"
+#include <string>
+
 
 class CRArduinoMain
 {
@@ -29,6 +32,9 @@ class CRArduinoMain
 	
 	DCMotor leftMotor;
 	DCMotor rightMotor;
+	
+	Servo panServo;
+	Servo tiltServo;
     
 	String piInputString;
 	boolean piInputStringComplete;
@@ -46,6 +52,7 @@ class CRArduinoMain
 	void processRappelCommand();
 	void processStatusRequest();
 	void blinkLED(int num);
+	void processImageCommand();
 };
 
 extern CRArduinoMain crArduinoMain;
