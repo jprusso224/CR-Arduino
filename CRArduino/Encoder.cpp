@@ -11,10 +11,19 @@ void Encoder::initEncoder(int interruptNumber, int resolution){
 }
 
 void Encoder::encoderISR(){
-	pulseCount++;
+	
+	if(digitalRead(40) == HIGH){
+		pulseCount++; 
+		digitalWrite(13,HIGH);
+	}
+	else{
+		pulseCount--;
+		digitalWrite(13,LOW);
+	}
 }
 
 int Encoder::getDistanceTraveled(){
-	return 0; //Convert pulseCount to distance in cm
+	int deg = (pulseCount*360)/ENCODER_RESOLUTION;
+	return deg;
 }
 

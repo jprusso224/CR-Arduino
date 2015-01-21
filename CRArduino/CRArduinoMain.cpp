@@ -20,6 +20,8 @@ void CRArduinoMain::setup()
 	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
 	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
 	frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	pinMode(40,INPUT);
+	
 	
 	//DC motors
 	leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
@@ -62,6 +64,9 @@ void CRArduinoMain::loop()
 			piInputStringComplete = false;
 		}
 	}
+	
+	
+	
 	
 }
 

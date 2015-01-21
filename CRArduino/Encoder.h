@@ -9,6 +9,8 @@
 	#include "WProgram.h"
 #endif
 
+#include "crconstants.h"
+
 class Encoder
 {
  protected:
