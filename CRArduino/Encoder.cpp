@@ -14,11 +14,11 @@ void Encoder::encoderISR(){
 	
 	if(digitalRead(40) == HIGH){
 		pulseCount++; 
-		digitalWrite(13,HIGH);
+		
 	}
 	else{
 		pulseCount--;
-		digitalWrite(13,LOW);
+		
 	}
 }
 

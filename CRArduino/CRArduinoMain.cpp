@@ -13,19 +13,21 @@
 void CRArduinoMain::setup()
 {
 	//Range-finder
-	rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
+	//rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
 	
 	//Encoders
-	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
-	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
-	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
-	frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	//backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	//backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	//frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	//frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
 	pinMode(40,INPUT);
 	
 	
 	//DC motors
-	leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
-	rightMotor.initDCMotor(RIGHT_MOTOR_PWM_PIN,RIGHT_MOTOR_DIR_PIN,RIGHT_MOTOR_EN_PIN,MOTOR_CW);	
+//	leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
+//	rightMotor.initDCMotor(RIGHT_MOTOR_PWM_PIN,RIGHT_MOTOR_DIR_PIN,RIGHT_MOTOR_EN_PIN,MOTOR_CW);	
+pinMode(7,OUTPUT);
+pinMode(30,OUTPUT);
 	
 	//Servos
 	tiltServo.attach(TILT_SERVO_PIN);
@@ -65,8 +67,11 @@ void CRArduinoMain::loop()
 		}
 	}
 	
-	
-	
+	//Motor Test
+	analogWrite(7,50);
+	delay(5000);
+	analogWrite(7,0);
+	delay(5000);
 	
 }
 
