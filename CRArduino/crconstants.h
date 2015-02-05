@@ -20,7 +20,7 @@
 /*Range-finder*/
 #define RANGE_RESOLUTION 147
 
-/*Encoders*/
+/*Encoder Interrupts*/
 #define ENCODER_RESOLUTION 500
 #define BACK_LEFT_ENCODER_INT 2
 #define BACK_RIGHT_ENCODER_INT 3
