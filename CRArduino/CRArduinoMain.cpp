@@ -103,13 +103,17 @@ void CRArduinoMain::processDriveCommand(){
 void CRArduinoMain::processRappelCommand(){
 		int range;
 		String rangeStr;
-	
 		blinkLED(4);
-		
 		//Read range-finder and store in output string, send to pi
 		range = rangeFinder.readRange();
 		rangeStr = String(range);
+		if(rangeStr.length() == 3){
 		Serial.print("$RP"+rangeStr+"\n");
+		}else if(rangeStr.length() == 2){
+			Serial.print("$RP0"+rangeStr+"\n");
+		}else{
+			Serial.print("$RP00"+rangeStr+"\n");
+		}
 		Serial.flush();
 }
 
