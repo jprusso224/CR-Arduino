@@ -13,21 +13,24 @@
 void CRArduinoMain::setup()
 {
 	//Range-finder
-	//rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
+	rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
+	depth = 0;
+	totalDepth = 0;
+	startRappelFlag = true;
 	
 	//Encoders
-	//backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
-	//backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
-	//frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
-	//frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION);
+	frontLeftEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION);
 	pinMode(40,INPUT);
 	
 	
-	//DC motors
-//	leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
-//	rightMotor.initDCMotor(RIGHT_MOTOR_PWM_PIN,RIGHT_MOTOR_DIR_PIN,RIGHT_MOTOR_EN_PIN,MOTOR_CW);	
-pinMode(7,OUTPUT);
-pinMode(30,OUTPUT);
+	  //DC motors
+		leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
+		rightMotor.initDCMotor(RIGHT_MOTOR_PWM_PIN,RIGHT_MOTOR_DIR_PIN,RIGHT_MOTOR_EN_PIN,MOTOR_CW);	
+		pinMode(7,OUTPUT);
+		pinMode(30,OUTPUT);
 	
 	//Servos
 	tiltServo.attach(TILT_SERVO_PIN);
@@ -101,20 +104,35 @@ void CRArduinoMain::processDriveCommand(){
 }
 
 void CRArduinoMain::processRappelCommand(){
+	
+	    //Declare variables
 		int range;
-		String rangeStr;
-		blinkLED(4);
-		//Read range-finder and store in output string, send to pi
+		String depthStr;
+		int rangeArray[] = {0, 0};
+		
+		//Read range-finder (may want an average for the beginning of rappel stage.)
 		range = rangeFinder.readRange();
-		rangeStr = String(range);
-		if(rangeStr.length() == 3){
-		Serial.print("$RP"+rangeStr+"\n");
-		}else if(rangeStr.length() == 2){
-			Serial.print("$RP0"+rangeStr+"\n");
+		if(startRappelFlag){
+			//get average range
+			rangeArray[0] = rangeFinder.readRange();
+			rangeArray[1] = rangeFinder.readRange();
+			totalDepth =  (range+rangeArray[0]+rangeArray[1])/3;
+			startRappelFlag = false;
+		}
+		//Compute depth
+		depth = totalDepth - range;
+		
+		//Convert depth to string and send to serial port.
+		depthStr = String(depth);
+		if(depthStr.length() == 3){
+		Serial.print("$RP"+depthStr+"\n");
+		}else if(depthStr.length() == 2){
+			Serial.print("$RP0"+depthStr+"\n");
 		}else{
-			Serial.print("$RP00"+rangeStr+"\n");
+			Serial.print("$RP00"+depthStr+"\n");
 		}
 		Serial.flush();
+		
 }
 
 void CRArduinoMain::processStatusRequest(){

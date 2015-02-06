@@ -40,6 +40,10 @@ class CRArduinoMain
 	boolean piInputStringComplete;
 	char inChar;
 	
+	int depth;
+	int totalDepth;
+	boolean startRappelFlag;
+	
  public:
 	void setup();
 	void loop();
