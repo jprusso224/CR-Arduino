@@ -18,7 +18,7 @@
 #define PAN_SERVO_PIN 10
 
 /*Range-finder*/
-#define RANGE_RESOLUTION 147
+#define RANGE_RESOLUTION 58//147
 
 /*Encoder Interrupts*/
 #define ENCODER_RESOLUTION 500

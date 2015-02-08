@@ -71,11 +71,6 @@ void CRArduinoMain::loop()
 	}
 	
 	//Motor Test
-	analogWrite(7,50);
-	delay(5000);
-	analogWrite(7,0);
-	delay(5000);
-	
 }
 
 void CRArduinoMain::parseCommand(){
@@ -121,6 +116,7 @@ void CRArduinoMain::processRappelCommand(){
 		}
 		//Compute depth
 		depth = totalDepth - range;
+		if(depth < 0){depth = 0;}
 		
 		//Convert depth to string and send to serial port.
 		depthStr = String(depth);
