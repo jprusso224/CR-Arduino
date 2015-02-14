@@ -21,7 +21,7 @@ class DCMotor
 
  public:
 	void initDCMotor(int pwmPin, int directionPin, int enablePin, int direction);
-	void setSpeed(int speed);
+	void setSpeed(int pwmValue);
 	int getSpeed();
 	void setDirection(int direction);
 	int getDirection();

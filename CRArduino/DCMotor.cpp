@@ -15,9 +15,9 @@ void DCMotor::initDCMotor(int pwmPin, int directionPin, int enablePin, int direc
 	_direction = direction;
 }
 
-void DCMotor::setSpeed(int speed){
-	_speed = speed;
-	int pwmValue = speed*(MAX_RPM/255);
+void DCMotor::setSpeed(int pwmValue){
+	//_speed = speed;
+	//int pwmValue = speed/(MAX_RPM/255);
 	analogWrite(_pwmPin,pwmValue);
 }
 

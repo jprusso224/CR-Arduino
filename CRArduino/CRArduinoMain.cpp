@@ -17,6 +17,7 @@ void CRArduinoMain::setup()
 	depth = 0;
 	totalDepth = 0;
 	startRappelFlag = true;
+	distanceTraveled = 0; 
 	
 	//Encoders
 	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION,BACK);
@@ -93,8 +94,70 @@ void CRArduinoMain::parseCommand(){
 }
 
 void CRArduinoMain::processDriveCommand(){
-	blinkLED(5);
-	Serial.print("$DP\n");
+	
+	String targetString = "";
+	int driveDistance = 0;
+	long int startCount = 0L;
+	long int targetCount = 0L;
+	char fromCR = NULL;
+	int frontDistanceAvg =0;
+	int rearDistanceAvg =0;
+	int targetDistance = 0;
+	int relativeDistance = 0;
+	int motorSpeed = 0;
+	
+	/*Determine whether turning or driving*/
+	char driveType;
+	driveType = piInputString[2];
+	
+	switch (driveType)
+	{
+		case 'L':
+		    break;
+		case 'R':
+			break;
+		case 'B':
+			break;
+		default:
+			
+			rightMotor.setDirection(MOTOR_CW);
+			leftMotor.setDirection(MOTOR_CCW);
+			
+			//Extract Command
+			targetString = piInputString.substring(4,7);
+			driveDistance = targetString.toInt();
+			
+			//Set Drive target	
+			targetDistance = distanceTraveled + driveDistance;
+			
+			while(distanceTraveled < targetDistance){
+			
+				//Get distance Traveled via average
+				rearDistanceAvg = (backLeftEncoder.getDistanceTraveled() + backRightEncoder.getDistanceTraveled())/2;
+				frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
+				distanceTraveled = (rearDistanceAvg + frontDistanceAvg);
+				relativeDistance += distanceTraveled;
+				
+				//Determine how fast to drive motor
+				if(relativeDistance < 1000){
+					//ramp up
+					motorSpeed = relativeDistance*(255/1000);
+				}else if(targetDistance - distanceTraveled < 1000){
+					//ramp down
+					motorSpeed = 255 - (targetDistance - distanceTraveled)*(250/1000);
+				}else{
+					motorSpeed = 255;
+				}
+				
+				rightMotor.setSpeed(motorSpeed);
+				leftMotor.setSpeed(motorSpeed);
+			}
+			
+			rightMotor.setSpeed(0);
+			leftMotor.setSpeed(0);
+		    break;
+	}
+	Serial.print("$DP\n"); 
 	Serial.flush();
 }
 

@@ -44,6 +44,8 @@ class CRArduinoMain
 	int totalDepth;
 	boolean startRappelFlag;
 	
+	int distanceTraveled; 
+	
  public:
 	void setup();
 	void loop();
