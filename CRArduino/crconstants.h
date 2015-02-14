@@ -26,10 +26,14 @@
 #define BACK_RIGHT_ENCODER_INT 3
 #define FRONT_LEFT_ENCODER_INT 4
 #define FRONT_RIGHT_ENCODER_INT 5
+#define FRONT 0
+#define BACK 1
 
 /*DC Motors*/
 #define MAX_RPM 10000
 #define MOTOR_CCW 0
 #define MOTOR_CW 1
+#define GEAR_RATIO 54
+#define WHEEL_RADIUS 100 //mm
 
 

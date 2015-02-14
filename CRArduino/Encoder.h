@@ -17,9 +17,10 @@ class Encoder
 	int _interruptNumber;
 	int _resolution;
 	volatile long pulseCount;
-
+	int _type;
+	
  public:
-	void initEncoder(int interruptNumber, int resolution);
+	void initEncoder(int interruptNumber, int resolution, int type);
 	int getDistanceTraveled();
 	void encoderISR();
 };
