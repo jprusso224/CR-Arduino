@@ -335,6 +335,12 @@ build.arch=AVR
     <Compile Include="crconstants.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="CRDriveState.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="CRDriveState.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="DCMotor.cpp">
       <SubType>compile</SubType>
     </Compile>

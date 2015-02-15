@@ -18,12 +18,16 @@
 #include "Encoder.h"
 #include "RangeFinder.h"
 #include "DCMotor.h"
+#include "CRDriveState.h"
 #include <string>
 
 
 class CRArduinoMain
 {
  private:
+	
+	CRDriveState crDriveState;
+	
 	int result;
 	Encoder backLeftEncoder;
 	Encoder backRightEncoder;

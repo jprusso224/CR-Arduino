@@ -27,6 +27,8 @@ void frontRightEncoderISR();
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduino.ino"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.cpp"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRArduinoMain.h"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRDriveState.cpp"
+#include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\CRDriveState.h"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\DCMotor.cpp"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\DCMotor.h"
 #include "C:\Users\John Russo\Documents\Atmel Studio\6.2\CR-Arduino\CRArduino\Encoder.cpp"

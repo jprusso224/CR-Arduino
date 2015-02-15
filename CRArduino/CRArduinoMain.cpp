@@ -10,8 +10,13 @@
 #include "RangeFinder.h"
 #include "crconstants.h"
 
+
 void CRArduinoMain::setup()
 {
+	
+	//Drive State
+	crDriveState = CRDriveState();
+	
 	//Range-finder
 	rangeFinder.initRangeFinder(RANGE_RESOLUTION,RANGEFINDER_PIN);
 	depth = 0;
