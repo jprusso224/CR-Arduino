@@ -33,6 +33,7 @@ class CRArduinoMain
 	Encoder backRightEncoder;
 	Encoder frontLeftEncoder;
 	Encoder frontRightEncoder;
+	int count;
 	
 	DCMotor leftMotor;
 	DCMotor rightMotor;

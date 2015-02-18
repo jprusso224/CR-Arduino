@@ -6,7 +6,7 @@
 
 #define RANGEFINDER_PIN 6
 
-#define LEFT_MOTOR_PWM_PIN 7
+#define LEFT_MOTOR_PWM_PIN 4
 #define RIGHT_MOTOR_PWM_PIN 8
 #define LEFT_MOTOR_DIR_PIN 30
 #define RIGHT_MOTOR_DIR_PIN 32
@@ -21,7 +21,7 @@
 #define RANGE_RESOLUTION 58//147
 
 /*Encoder Interrupts*/
-#define ENCODER_RESOLUTION 500
+#define ENCODER_RESOLUTION 1024
 #define BACK_LEFT_ENCODER_INT 2
 #define BACK_RIGHT_ENCODER_INT 3
 #define FRONT_LEFT_ENCODER_INT 4
@@ -34,6 +34,6 @@
 #define MOTOR_CCW 0
 #define MOTOR_CW 1
 #define GEAR_RATIO 54
-#define WHEEL_RADIUS 100 //mm
+#define WHEEL_RADIUS 90 //mm
 
 

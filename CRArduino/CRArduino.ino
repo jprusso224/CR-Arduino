@@ -14,10 +14,10 @@
 void setup()
 {
 	crArduinoMain.setup();
-	attachInterrupt(2,backLeftEncoderISR,HIGH);
-	attachInterrupt(3,backLeftEncoderISR,HIGH);
-	attachInterrupt(4,backLeftEncoderISR,HIGH);
-	attachInterrupt(5,backLeftEncoderISR,HIGH);
+	attachInterrupt(2,backLeftEncoderISR,RISING);
+	attachInterrupt(3,backRightEncoderISR,RISING);
+	//attachInterrupt(4,frontLeftEncoderISR,HIGH);
+	//attachInterrupt(5,frontRightEncoderISR,HIGH);
 }
 
 void loop()
