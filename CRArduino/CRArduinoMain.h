@@ -50,6 +50,7 @@ class CRArduinoMain
 	boolean startRappelFlag;
 	
 	int distanceTraveled; 
+	int orientation;
 	
  public:
 	void setup();

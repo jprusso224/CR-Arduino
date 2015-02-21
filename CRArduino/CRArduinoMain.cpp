@@ -23,6 +23,7 @@ void CRArduinoMain::setup()
 	totalDepth = 0;
 	startRappelFlag = true;
 	distanceTraveled = 0; 
+	orientation = 0;
 	
 	//Encoders
 	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION,BACK);
@@ -108,6 +109,8 @@ void CRArduinoMain::processDriveCommand(){
 	
 	String targetString = "";
 	int driveDistance = 0;
+	int driveAngle = 0;
+	int targetAngle = 0;
 	long int startCount = 0L;
 	long int targetCount = 0L;
 	char fromCR = NULL;
@@ -118,6 +121,7 @@ void CRArduinoMain::processDriveCommand(){
 	int motorSpeed = 0;
 	long currPulseCount = 0L;
 	int startDistance = 0;
+	int turnDistance = 0;
 	
 	/*Determine whether turning or driving*/
 	char driveType;
@@ -125,12 +129,61 @@ void CRArduinoMain::processDriveCommand(){
 	
 	switch (driveType)
 	{
-		case 'L':
-		    break;
-		case 'R':
+		case 'L': //turn left
+		    rightMotor.setDirection(MOTOR_CW);
+		    leftMotor.setDirection(MOTOR_CW);
+			
+			//Extract command
+			targetString = piInputString.substring(3,5);
+			driveAngle = targetString.toInt();
+			motorSpeed = 100;
+			//Set Drive target
+			targetAngle = orientation - int(driveAngle*1000*(PI/180)); //Both need to be in mm.
+			
+			//loop
+			while(orientation > targetAngle){ 
+				
+				delay(100);
+				frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
+				//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
+				orientation = (frontDistanceAvg*1000/DRIVE_SHAFT_RADIUS);
+				
+				rightMotor.setSpeed(motorSpeed);
+				leftMotor.setSpeed(motorSpeed);
+			}
+			rightMotor.setSpeed(0);
+			leftMotor.setSpeed(0);
 			break;
+			
+		case 'R': //turn right
+			rightMotor.setDirection(MOTOR_CCW);
+			leftMotor.setDirection(MOTOR_CCW);
+			
+				//Extract command
+				targetString = piInputString.substring(3,5);
+				driveAngle = targetString.toInt();
+				motorSpeed = 100;
+				//Set Drive target
+				targetAngle = orientation + int(driveAngle*1000*(PI/180)); //watch for overflow
+	
+				//loop
+				while(orientation < targetAngle){
+					
+					delay(100);
+					frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
+					//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
+					orientation = ((frontDistanceAvg*1000)/DRIVE_SHAFT_RADIUS);
+					
+					rightMotor.setSpeed(motorSpeed);
+					leftMotor.setSpeed(motorSpeed);
+				}
+				rightMotor.setSpeed(0);
+				leftMotor.setSpeed(0);
+				break;
+			
 		case 'B':
 			break;
+			
 		default:
 			
 			rightMotor.setDirection(MOTOR_CW);

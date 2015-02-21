@@ -35,5 +35,5 @@
 #define MOTOR_CW 1
 #define GEAR_RATIO 54
 #define WHEEL_RADIUS 90 //mm
-
+#define DRIVE_SHAFT_RADIUS 200
 
