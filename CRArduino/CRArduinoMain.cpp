@@ -69,7 +69,7 @@ void CRArduinoMain::loop()
 			piInputStringComplete = true;
 		}
 	}
-	delay(250); // Doesn't work without this. My guess is it gives the serial buffer time to fill if the message isn't complete.
+	delay(100); // Doesn't work without this. My guess is it gives the serial buffer time to fill if the message isn't complete.
 	
 	if(piInputStringComplete){
 		//if its a command
@@ -87,7 +87,7 @@ void CRArduinoMain::loop()
 
 void CRArduinoMain::parseCommand(){
 	char commandType;
-	Serial.println("Command Received");
+
 	commandType = piInputString[1];
 	switch(commandType){
 		case 'R':
@@ -237,9 +237,10 @@ void CRArduinoMain::processDriveCommand(){
 
 void CRArduinoMain::processRappelCommand(){
 	
+		
 	    //Declare variables
-		int range;
-		String depthStr;
+		int range = 0;
+		String depthStr = "";
 		int rangeArray[] = {0, 0};
 		
 		//Read range-finder (may want an average for the beginning of rappel stage.)
@@ -248,17 +249,17 @@ void CRArduinoMain::processRappelCommand(){
 			//get average range
 			rangeArray[0] = rangeFinder.readRange();
 			rangeArray[1] = rangeFinder.readRange();
-			totalDepth =  (range+rangeArray[0]+rangeArray[1])/3;
+			totalDepth =  (range+rangeArray[0]+rangeArray[1])/3  -  20;
+			//range = totalDepth; // Force the initial calculated depth to be zero
 			startRappelFlag = false;
 		}
 		//Compute depth
 		depth = totalDepth - range;
 		if(depth < 0){depth = 0;}
-		
 		//Convert depth to string and send to serial port.
 		depthStr = String(depth);
 		if(depthStr.length() == 3){
-		Serial.print("$RP"+depthStr+"\n");
+		    Serial.print("$RP"+depthStr+"\n");
 		}else if(depthStr.length() == 2){
 			Serial.print("$RP0"+depthStr+"\n");
 		}else{

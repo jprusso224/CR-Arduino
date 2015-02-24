@@ -16,8 +16,14 @@ void RangeFinder::initRangeFinder(int resolution,int rangePin)
 }
 
 int RangeFinder::readRange(){
-	int delay = pulseIn(_rangePin,HIGH);
-	range = delay/_resolution;
+	int delayIn = pulseIn(_rangePin,HIGH);
+	range = delayIn/_resolution;
+	return range;
+}
+
+int RangeFinder::readAnRange(){
+	int voltage = analogRead(A9);
+	range = (voltage/49)*10;
 	return range;
 }
 

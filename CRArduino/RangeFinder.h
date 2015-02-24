@@ -24,6 +24,7 @@ class RangeFinder{
  public:
 	void initRangeFinder(int resolution,int rangePin);
 	int readRange();
+	int readAnRange();
 };
 
 extern RangeFinder rangeFinder;
