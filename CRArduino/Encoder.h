@@ -18,9 +18,12 @@ class Encoder
 	int _resolution;
 	long pulseCount;
 	int _type;
+	int _side;
+	int _ePin;
+	int _dirPin;
 	
  public:
-	void initEncoder(int interruptNumber, int resolution, int type);
+	void initEncoder(int interruptNumber, int resolution, int type, int side, int dirPin,int ePin);
 	int getDistanceTraveled();
 	void encoderISR();
 	int getPulseCount();

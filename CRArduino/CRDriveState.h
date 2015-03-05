@@ -18,10 +18,10 @@ class CRDriveState
  protected:
  
     int _state;
-	long int prevFrontLeftDistance;
-	long int prevFrontRightDistance;
-	long int prevBackLeftDistance;
-	long int prevBackRightDistance;
+	int prevFrontLeftDistance;
+	int prevFrontRightDistance;
+	int prevBackLeftDistance;
+	int  prevBackRightDistance;
 
  public:
  
@@ -48,6 +48,7 @@ class CRDriveState
 	 * @param state Desired drive state.                                            
 	 */
 	void setCRDriveState(int state);
+	int getOrientation();
 	
 };
 
