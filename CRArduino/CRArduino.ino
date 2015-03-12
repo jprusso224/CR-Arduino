@@ -15,7 +15,7 @@ void setup()
 {
 	crArduinoMain.setup();
 	//attachInterrupt(2,backLeftEncoderISR,FALLING); //pin 21
-	attachInterrupt(3,backRightEncoderISR,FALLING); //pin 20
+	//attachInterrupt(3,backRightEncoderISR,FALLING); //pin 20
 	attachInterrupt(4,frontLeftEncoderISR,FALLING); //pin 19
 	attachInterrupt(5,frontRightEncoderISR,FALLING); //pin 18
 }
