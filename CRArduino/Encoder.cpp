@@ -40,12 +40,17 @@ void Encoder::encoderISR(){
 
 int Encoder::getDistanceTraveled(){
 	
-	long mrad = long(pulseCount*10*2*PI)/_resolution; //(rad/1000)
+	/*long mrad = long(pulseCount*10*2*PI)/_resolution; //(rad/1000)
 	//Serial.print((String)mrad)
 	if(_type == FRONT){
 		mrad = mrad/GEAR_RATIO;
 	}
-    int distanceTraveled = int(mrad*WHEEL_RADIUS/10); 
+    int distanceTraveled = int(mrad*WHEEL_RADIUS/10);*/
+	float mrad = (pulseCount*2*PI)/(float)_resolution;
+	if(_type == FRONT){
+		mrad = mrad/GEAR_RATIO;
+	}
+	int distanceTraveled = (int)(mrad*WHEEL_RADIUS);
 	return distanceTraveled;
 }
 

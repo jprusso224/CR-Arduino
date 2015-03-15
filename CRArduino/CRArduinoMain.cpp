@@ -26,8 +26,8 @@ void CRArduinoMain::setup()
 	orientation = 0;
 	
 	//Encoders
-	//backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,24,BACK_LEFT_ENCODER_PIN);
-	//backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,RIGHT,25,BACK_RIGHT_ENCODER_PIN);
+	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,LEFT,24,BACK_LEFT_ENCODER_PIN);
+	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,RIGHT,25,BACK_RIGHT_ENCODER_PIN);
 	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,LEFT,26,FRONT_LEFT_ENCODER_PIN);
 	frontRightEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,RIGHT,27,FRONT_RIGHT_ENCODER_PIN);
 	
@@ -119,6 +119,8 @@ void CRArduinoMain::processDriveCommand(){
 	int targetDistance = 0;
 	int frontRightDistance = 0;
 	int frontLeftDistance = 0;
+	int backRightDistance = 0;
+	int backLeftDistance = 0;
 	int relativeDistance = 0;
 	int motorSpeed = 0;
 	long currPulseCount = 0L;
@@ -202,26 +204,32 @@ void CRArduinoMain::processDriveCommand(){
 			startDistance = distanceTraveled;
 			
 			while(distanceTraveled < targetDistance){
-				//delay(100);
+				delay(200);
 				//Serial.println(distanceTraveled);
-				currPulseCount = frontLeftEncoder.getPulseCount();
+				//currPulseCount = frontLeftEncoder.getPulseCount();
 				//Serial.println(currPulseCount);
 				//Get distance Traveled via average
-				//rearDistanceAvg = backRightEncoder.getDistanceTraveled();//(backLeftEncoder.getDistanceTraveled() + backRightEncoder.getDistanceTraveled())/2;
+				backLeftDistance = backLeftEncoder.getDistanceTraveled();
+				backRightDistance = backRightEncoder.getDistanceTraveled();
+				rearDistanceAvg = (backLeftDistance + backRightDistance)/2;
 				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 				frontRightDistance = frontRightEncoder.getDistanceTraveled();
-				frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
-				distanceTraveled = frontDistanceAvg;//(rearDistanceAvg + frontDistanceAvg)/2;
+				frontDistanceAvg = (frontLeftDistance + frontRightDistance)/2;
+				distanceTraveled = rearDistanceAvg;// + frontDistanceAvg)/2;
 			    //distanceTraveled = frontRightEncoder.getDistanceTraveled();
 				relativeDistance = distanceTraveled - startDistance;
 				//Serial.println("PL:" +  String(currPulseCount));
-				currPulseCount = frontLeftEncoder.getPulseCount();
-				//Serial.println("PR:" +  String(currPulseCount));
-				//Serial.println("FL:" +  String(frontLeftDistance));
+				currPulseCount = frontRightEncoder.getPulseCount();
+				//Serial.println("PBL:" +  String(currPulseCount));
+				Serial.println("FLD:" +  String(frontLeftDistance));
+				Serial.println("FRD:" +  String(frontRightDistance));
+				Serial.println("BLD:" +  String(backLeftDistance));
+				Serial.println("BRD:" +  String(backRightDistance));
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
 				
 				
+				/*
 				//Determine how fast to drive motor
 				if(relativeDistance < 50){
 					//ramp up
@@ -233,7 +241,8 @@ void CRArduinoMain::processDriveCommand(){
 					//Serial.print("Max Speed!");
 					motorSpeed = 85;
 				}
-				
+				*/
+				motorSpeed = 50;
 				//Serial.println("Speed Set: " + String(motorSpeed));
 			
 				leftMotor.setSpeed(motorSpeed);

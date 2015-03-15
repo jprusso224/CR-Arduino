@@ -1,0 +1,4 @@
+﻿This build would be faster if you upgraded to Visual Micro Gold Edition + USB debugger http://www.visualmicro.com 
+Please wait ...
+Compiling 'CRArduino' for 'Arduino Mega 2560 or Mega ADK'
+Binary sketch size: 14,842 bytes (used 6% of a 258,048 byte maximum) (3.82 secs)

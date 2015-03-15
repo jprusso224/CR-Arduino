@@ -30,8 +30,8 @@
 #define RANGE_RESOLUTION 58//147
 
 /*Encoder Interrupts*/
-#define ENCODER_RESOLUTION_FRONT 16
-#define ENCODER_RESOLUTION_REAR 1024
+#define ENCODER_RESOLUTION_FRONT 32
+#define ENCODER_RESOLUTION_REAR 2048
 #define BACK_LEFT_ENCODER_INT 2
 #define BACK_RIGHT_ENCODER_INT 3
 #define FRONT_LEFT_ENCODER_INT 4
@@ -43,8 +43,8 @@
 #define MAX_RPM 10000
 #define MOTOR_CCW 0
 #define MOTOR_CW 1
-#define GEAR_RATIO 67//70
-#define WHEEL_RADIUS 93//90 //mm
+#define GEAR_RATIO 70.0//70
+#define WHEEL_RADIUS 95//93//90 //mm
 
 //back wheels = 93.7
 //front 92.95
