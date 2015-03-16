@@ -19,7 +19,7 @@
 #include "RangeFinder.h"
 #include "DCMotor.h"
 #include "CRDriveState.h"
-#include <string>
+#include <string.h>
 
 
 class CRArduinoMain
