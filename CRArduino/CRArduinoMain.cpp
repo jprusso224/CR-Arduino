@@ -301,13 +301,17 @@ void CRArduinoMain::processStatusRequest(){
 
 void CRArduinoMain::processImageCommand(){
 	String temp = piInputString.substring(3,4);
-	int pan = temp.toInt();
+	float pan = temp.toInt();
 	temp = piInputString.substring(5,6);
-	int tilt = temp.toInt();
+	float tilt = temp.toInt();
 	if (piInputString[2] == '+'){
 		pan += 90;
 	}
-	panServo.write(pan); //These values are in angle under 200 but we want to change to ms (1000-2000) for 0-180 deg eventually to be more precise
+	// pan ranging from 0-180 but input 0 or +/-90 so 0 = 90 here
+	// tilt ranging from 0-90
+	tilt = 650+(885/90)*tilt;
+	pan = 950+(47.5/90)*pan;
+	panServo.write(pan);
 	delay(15);
 	tiltServo.write(tilt);
 	delay(15);
