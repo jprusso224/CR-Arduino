@@ -13,7 +13,7 @@
 #define RIGHT 1
 #define LEFT 0
 
-#define RANGEFINDER_PIN 6
+#define RANGEFINDER_PIN 4
 
 #define LEFT_MOTOR_PWM_PIN 7
 #define RIGHT_MOTOR_PWM_PIN 8
