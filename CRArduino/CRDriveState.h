@@ -18,10 +18,11 @@ class CRDriveState
  protected:
  
     int _state;
-	int prevFrontLeftDistance;
-	int prevFrontRightDistance;
-	int prevBackLeftDistance;
-	int  prevBackRightDistance;
+	int _prevFrontLeftDistance;
+	int _prevFrontRightDistance;
+	int _prevBackLeftDistance;
+	int _prevBackRightDistance;
+	unsigned long _time;
 
  public:
  
@@ -49,6 +50,17 @@ class CRDriveState
 	 */
 	void setCRDriveState(int state);
 	int getOrientation();
+	int getPrevFREncoderDistance();
+	int getPrevFLEncoderDistance();
+	int getPrevBREncoderDistance();
+	int getPrevBLEncoderDistance();
+	void setPrevFREncoderDistance(int distance);
+	void setPrevFLEncoderDistance(int distance);
+	void setPrevBREncoderDistance(int distance);
+	void setPrevBLEncoderDistance(int distance);
+	void setNewTime(unsigned long time);
+	unsigned long getLastTime();
+	
 	
 };
 
