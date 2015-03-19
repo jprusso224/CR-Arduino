@@ -244,6 +244,10 @@ void CRArduinoMain::processDriveCommand(){
 				*/
 				motorSpeed = 50;
 				//Serial.println("Speed Set: " + String(motorSpeed));
+				
+				//Speed correction algorithm here:
+				
+				
 			
 				leftMotor.setSpeed(motorSpeed);
 				rightMotor.setSpeed(motorSpeed);
