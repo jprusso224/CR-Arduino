@@ -48,5 +48,5 @@
 
 //back wheels = 93.7
 //front 92.95
-#define DRIVE_SHAFT_RADIUS 200
+#define DRIVE_SHAFT_RADIUS 220
 

@@ -134,7 +134,7 @@ void CRArduinoMain::processDriveCommand(){
 	switch (driveType)
 	{
 		case 'L': //turn left
-		    rightMotor.setDirection(MOTOR_CCW);
+		    rightMotor.setDirection(MOTOR_CW);
 		    leftMotor.setDirection(MOTOR_CW);
 			
 			//Extract command
@@ -148,9 +148,16 @@ void CRArduinoMain::processDriveCommand(){
 			while(orientation > targetAngle){ 
 				
 				delay(100);
+				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
+				frontRightDistance = -frontRightEncoder.getDistanceTraveled();
+				Serial.println("FL: " + (String)frontLeftDistance);
+				Serial.println("FR: " + (String)frontRightDistance);
+				
 				frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
 				//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
-				orientation = (frontDistanceAvg*1000/DRIVE_SHAFT_RADIUS);
+				orientation = ((frontDistanceAvg*1000)/DRIVE_SHAFT_RADIUS);
+				
+				Serial.println("O: " + (String)orientation);
 				
 				rightMotor.setSpeed(motorSpeed);
 				leftMotor.setSpeed(motorSpeed);
@@ -166,6 +173,7 @@ void CRArduinoMain::processDriveCommand(){
 				//Extract command
 				targetString = piInputString.substring(3,5);
 				driveAngle = targetString.toInt();
+				
 				motorSpeed = 100;
 				//Set Drive target
 				targetAngle = orientation + int(driveAngle*1000*(PI/180)); //watch for overflow
@@ -174,10 +182,15 @@ void CRArduinoMain::processDriveCommand(){
 				while(orientation < targetAngle){
 					
 					delay(100);
+						frontLeftDistance = -frontLeftEncoder.getDistanceTraveled();
+						frontRightDistance = frontRightEncoder.getDistanceTraveled();
+						Serial.println("FL: " + (String)frontLeftDistance);
+						Serial.println("FR: " + (String)frontRightDistance);
+					
 					frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
 					//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
 					orientation = ((frontDistanceAvg*1000)/DRIVE_SHAFT_RADIUS);
-					
+					Serial.println("O: " + (String)orientation);
 					rightMotor.setSpeed(motorSpeed);
 					leftMotor.setSpeed(motorSpeed);
 				}

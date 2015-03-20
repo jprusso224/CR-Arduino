@@ -21,14 +21,14 @@ void Encoder::initEncoder(int interruptNumber, int resolution, int type, int sid
 void Encoder::encoderISR(){
 	
 	if(_side == LEFT){
-		if(digitalRead(_dirPin) == HIGH){
+		if(digitalRead(_dirPin) == LOW){
 			pulseCount--;
 		}
 		else{
 			pulseCount++;
 		}
 	}else{
-		if(digitalRead(_dirPin) == HIGH){
+		if(digitalRead(_dirPin) == LOW){
 			pulseCount++;
 		}
 		else{
