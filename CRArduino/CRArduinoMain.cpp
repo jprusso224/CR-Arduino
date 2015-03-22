@@ -28,8 +28,8 @@ void CRArduinoMain::setup()
 	//Encoders
 	backLeftEncoder.initEncoder(BACK_LEFT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,LEFT,24,BACK_LEFT_ENCODER_PIN);
 	backRightEncoder.initEncoder(BACK_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_REAR,BACK,RIGHT,25,BACK_RIGHT_ENCODER_PIN);
-	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,LEFT,26,FRONT_LEFT_ENCODER_PIN);
-	frontRightEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,RIGHT,27,FRONT_RIGHT_ENCODER_PIN);
+	frontLeftEncoder.initEncoder(FRONT_LEFT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,LEFT,27,FRONT_LEFT_ENCODER_PIN);
+	frontRightEncoder.initEncoder(FRONT_RIGHT_ENCODER_INT,ENCODER_RESOLUTION_FRONT,FRONT,RIGHT,26,FRONT_RIGHT_ENCODER_PIN);
 	
 	  //DC motors
 		leftMotor.initDCMotor(LEFT_MOTOR_PWM_PIN,LEFT_MOTOR_DIR_PIN,LEFT_MOTOR_EN_PIN,MOTOR_CCW);
@@ -126,6 +126,16 @@ void CRArduinoMain::processDriveCommand(){
 	long currPulseCount = 0L;
 	int startDistance = 0;
 	int turnDistance = 0;
+	int deltaFrontLeftDistance = 0;
+	int deltaFrontRightDistance = 0;
+	double speedFL = 0;
+	double speedFR = 0;
+	int pwmFL = 0;
+	int pwmFR = 0;
+	unsigned long currTime = 0;
+	unsigned long deltaTime = 0;
+	float desiredSpeed = 0;
+	int driveCounter = 0;
 	
 	/*Determine whether turning or driving*/
 	char driveType;
@@ -207,6 +217,7 @@ void CRArduinoMain::processDriveCommand(){
 			leftMotor.setDirection(MOTOR_CW);
 			rightMotor.setSpeed(0);
 			leftMotor.setSpeed(0);
+			desiredSpeed = DRIVE_SPEED;
 			//Extract Command
 			targetString = piInputString.substring(3,6);
 		
@@ -217,7 +228,7 @@ void CRArduinoMain::processDriveCommand(){
 			startDistance = distanceTraveled;
 			
 			while(distanceTraveled < targetDistance){
-				delay(200);
+				delay(5);
 				//Serial.println(distanceTraveled);
 				//currPulseCount = frontLeftEncoder.getPulseCount();
 				//Serial.println(currPulseCount);
@@ -234,10 +245,12 @@ void CRArduinoMain::processDriveCommand(){
 				//Serial.println("PL:" +  String(currPulseCount));
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
+				if(driveCounter == 20){
 				Serial.println("FLD:" +  String(frontLeftDistance));
 				Serial.println("FRD:" +  String(frontRightDistance));
 				Serial.println("BLD:" +  String(backLeftDistance));
 				Serial.println("BRD:" +  String(backRightDistance));
+				}
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
 				
@@ -255,23 +268,73 @@ void CRArduinoMain::processDriveCommand(){
 					motorSpeed = 85;
 				}
 				*/
-				motorSpeed = 50;
+				//motorSpeed = 50;
 				//Serial.println("Speed Set: " + String(motorSpeed));
 				
+				
 				//Speed correction algorithm here:
+				deltaFrontLeftDistance = frontLeftDistance - crDriveState.getPrevFLEncoderDistance();
+				deltaFrontRightDistance = frontRightDistance - crDriveState.getPrevFREncoderDistance();
+				crDriveState.setPrevFREncoderDistance(frontRightDistance);
+				crDriveState.setPrevFLEncoderDistance(frontLeftDistance);
+				
+				currTime = millis();
+				deltaTime = currTime - crDriveState.getLastTime();
+				crDriveState.setNewTime(currTime);
+				
+				//Serial.println("DT: " + (String)deltaTime);
+				
+				speedFL = (float)deltaFrontLeftDistance/(float)deltaTime;
+				speedFR = (float)deltaFrontRightDistance/(float)deltaTime;
+				
+				if(driveCounter == 20){
+					Serial.println("FLS: " + (String)(speedFL*1000000));
+					Serial.println("FRS: " + (String)(speedFR*1000000));
+					driveCounter = 0;
+				}
+				
+				if(speedFL < desiredSpeed){
+					pwmFL = pwmFL + 5;
+				}else if(speedFL > desiredSpeed){
+					pwmFL = pwmFL - 5;
+				}
+				if(speedFR < desiredSpeed){
+					pwmFR = pwmFR + 5;
+				}else if(speedFR > desiredSpeed){
+					pwmFR = pwmFR - 5;
+				}
+				
+				//Don't let the CR attack Thomas.
+				if(pwmFL > 250){
+					pwmFL = 250;
+				}
+				if(pwmFR > 250){
+					pwmFR = 250;
+				}
+				if(pwmFL < 0){
+					pwmFL = 0;
+				}
+				if(pwmFR < 0){
+					pwmFR = 0;
+				}
 				
 				
 			
-				leftMotor.setSpeed(motorSpeed);
-				rightMotor.setSpeed(motorSpeed);
+				leftMotor.setSpeed(pwmFL);
+				rightMotor.setSpeed(pwmFR);
+				
+				driveCounter++;
 			}
 			
 			rightMotor.setSpeed(0);
 			leftMotor.setSpeed(0);
 		    break;
 	}
-	Serial.println("FL:" +  String(frontLeftDistance));
-	Serial.println("FR:" + String(frontRightDistance));
+	delay(200);
+	Serial.println("FLD:" +  String(frontLeftDistance));
+	Serial.println("FRD:" +  String(frontRightDistance));
+	Serial.println("BLD:" +  String(backLeftDistance));
+	Serial.println("BRD:" +  String(backRightDistance));
 	Serial.print("$DP\n"); 
 	Serial.flush();
 }
