@@ -12,27 +12,31 @@ void Encoder::initEncoder(int interruptNumber, int resolution, int type, int sid
 	_dirPin = dirPin;
 	_ePin = ePin;
 	pulseCount = 0L;
+	enabled = true;
 	pinMode(ePin,INPUT);
 	digitalWrite(ePin,HIGH);
 	pinMode(dirPin,INPUT);
+	
 	
 }
 
 void Encoder::encoderISR(){
 	
-	if(_side == LEFT){
-		if(digitalRead(_dirPin) == HIGH){
-			pulseCount--;
-		}
-		else{
-			pulseCount++;
-		}
-	}else{
-		if(digitalRead(_dirPin) == HIGH){
-			pulseCount++;
-		}
-		else{
-			pulseCount--;
+	if(enabled){
+		if(_side == LEFT){
+			if(digitalRead(_dirPin) == HIGH){
+				pulseCount--;
+			}
+			else{
+				pulseCount++;
+			}
+		}else{
+			if(digitalRead(_dirPin) == HIGH){
+				pulseCount++;
+			}
+			else{
+				pulseCount--;
+			}
 		}
 	}
 	
@@ -58,4 +62,11 @@ int Encoder::getDistanceTraveled(){
 
 int Encoder::getPulseCount(){
 	return pulseCount;
+}
+
+void Encoder::enableEncoder(){
+	enabled = true;
+}
+void Encoder::disableEncoder(){
+	enabled = false;
 }

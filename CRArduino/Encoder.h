@@ -21,12 +21,15 @@ class Encoder
 	int _side;
 	int _ePin;
 	int _dirPin;
+	boolean enabled;
 	
  public:
 	void initEncoder(int interruptNumber, int resolution, int type, int side, int dirPin,int ePin);
 	int getDistanceTraveled();
 	void encoderISR();
 	int getPulseCount();
+	void enableEncoder();
+	void disableEncoder();
 };
 
 #endif
