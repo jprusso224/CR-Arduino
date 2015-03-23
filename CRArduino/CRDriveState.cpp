@@ -40,11 +40,11 @@ int CRDriveState::getPrevFREncoderDistance(){
 }
 
 void CRDriveState::setPrevBLEncoderDistance(int distance){
-	_prevBackLeftDistance = distance;;
+	_prevBackLeftDistance = distance;
 }
 
 void CRDriveState::setPrevFLEncoderDistance(int distance){
-	_prevFrontLeftDistance = distance;;
+	_prevFrontLeftDistance = distance;
 }
 
 void CRDriveState::setPrevBREncoderDistance(int distance){

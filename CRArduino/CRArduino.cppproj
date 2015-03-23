@@ -543,6 +543,12 @@ build.arch=AVR
     <Compile Include="Encoder.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="PID_v1.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="PID_v1.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="RangeFinder.cpp">
       <SubType>compile</SubType>
     </Compile>

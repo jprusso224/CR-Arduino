@@ -33,6 +33,8 @@ void frontRightEncoderISR();
 #include <DCMotor.h>
 #include <Encoder.cpp>
 #include <Encoder.h>
+#include <PID_v1.cpp>
+#include <PID_v1.h>
 #include <RangeFinder.cpp>
 #include <RangeFinder.h>
 #include <Servo.cpp>

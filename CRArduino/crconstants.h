@@ -44,7 +44,7 @@
 #define MOTOR_CCW 0
 #define MOTOR_CW 1
 #define GEAR_RATIO 70.0//70
-#define WHEEL_RADIUS 98.6//93//90 //mm
+#define WHEEL_RADIUS 95.5//93//90 //mm
 #define REAR_WHEEL_RADIUS 93.7
 #define FRONT_WHEEL_RADIUS 92.95
 //back wheels = 93.7
@@ -57,5 +57,5 @@
 //y2 7(3/16)in
 //x2 (72)(9/16)
 //y2 11(1/2)
-#define DRIVE_SPEED 0.3
+#define DRIVE_SPEED 300
 

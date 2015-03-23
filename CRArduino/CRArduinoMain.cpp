@@ -11,6 +11,7 @@
 #include "crconstants.h"
 
 
+
 void CRArduinoMain::setup()
 {
 	
@@ -130,11 +131,11 @@ void CRArduinoMain::processDriveCommand(){
 	int deltaFrontRightDistance = 0;
 	double speedFL = 0;
 	double speedFR = 0;
-	int pwmFL = 0;
-	int pwmFR = 0;
+	double pwmFL = 0;
+	double pwmFR = 0;
 	unsigned long currTime = 0;
 	unsigned long deltaTime = 0;
-	float desiredSpeed = 0;
+	double desiredSpeed = DRIVE_SPEED;
 	int driveCounter = 0;
 	
 	/*Determine whether turning or driving*/
@@ -213,12 +214,16 @@ void CRArduinoMain::processDriveCommand(){
 			
 		default:
 			
-			rightMotor.setDirection(MOTOR_CCW);
-			leftMotor.setDirection(MOTOR_CW);
+			//Declare
+			PID pidFL(&speedFL,&pwmFL,&desiredSpeed,0.25,0.5,0.01,DIRECT);
+			PID pidFR(&speedFR,&pwmFR,&desiredSpeed,0.25,0.5,0.01,DIRECT);
+			pidFL.SetMode(AUTOMATIC);
+			pidFR.SetMode(AUTOMATIC);
+			rightMotor.setDirection(MOTOR_CW);
+			leftMotor.setDirection(MOTOR_CCW);
 			rightMotor.setSpeed(0);
 			leftMotor.setSpeed(0);
-			desiredSpeed = DRIVE_SPEED;
-			//Extract Command
+			
 			targetString = piInputString.substring(3,6);
 		
 			driveDistance = targetString.toInt();
@@ -228,7 +233,7 @@ void CRArduinoMain::processDriveCommand(){
 			startDistance = distanceTraveled;
 			
 			while(distanceTraveled < targetDistance){
-				delay(5);
+				delay(50);
 				//Serial.println(distanceTraveled);
 				//currPulseCount = frontLeftEncoder.getPulseCount();
 				//Serial.println(currPulseCount);
@@ -245,7 +250,7 @@ void CRArduinoMain::processDriveCommand(){
 				//Serial.println("PL:" +  String(currPulseCount));
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
-				if(driveCounter == 20){
+				if(driveCounter == 3){
 				Serial.println("FLD:" +  String(frontLeftDistance));
 				Serial.println("FRD:" +  String(frontRightDistance));
 				Serial.println("BLD:" +  String(backLeftDistance));
@@ -284,15 +289,23 @@ void CRArduinoMain::processDriveCommand(){
 				
 				//Serial.println("DT: " + (String)deltaTime);
 				
-				speedFL = (float)deltaFrontLeftDistance/(float)deltaTime;
-				speedFR = (float)deltaFrontRightDistance/(float)deltaTime;
+				speedFL = ((deltaFrontLeftDistance*1000)/deltaTime);
+				speedFR = ((deltaFrontRightDistance*1000)/deltaTime);
 				
-				if(driveCounter == 20){
-					Serial.println("FLS: " + (String)(speedFL*1000000));
-					Serial.println("FRS: " + (String)(speedFR*1000000));
+				if(driveCounter == 3){
+					Serial.println("FLS: " + (String)(speedFL));
+					Serial.println("FRS: " + (String)(speedFR));
+					Serial.println("pwmL: " + (String)(pwmFL));
+					Serial.println("pwmR: " + (String)(pwmFR));
+				//	Serial.println("FLDD: " + (String)(deltaFrontLeftDistance));
+				//	Serial.println("FRDD: " + (String)(deltaFrontRightDistance));
+				//	Serial.println("DT: " +  (String)(deltaTime));
+				
 					driveCounter = 0;
+					
 				}
 				
+				/*
 				if(speedFL < desiredSpeed){
 					pwmFL = pwmFL + 5;
 				}else if(speedFL > desiredSpeed){
@@ -302,7 +315,10 @@ void CRArduinoMain::processDriveCommand(){
 					pwmFR = pwmFR + 5;
 				}else if(speedFR > desiredSpeed){
 					pwmFR = pwmFR - 5;
-				}
+				}*/
+				
+				pidFL.Compute();
+				pidFR.Compute();
 				
 				//Don't let the CR attack Thomas.
 				if(pwmFL > 250){
@@ -317,8 +333,7 @@ void CRArduinoMain::processDriveCommand(){
 				if(pwmFR < 0){
 					pwmFR = 0;
 				}
-				
-				
+			
 			
 				leftMotor.setSpeed(pwmFL);
 				rightMotor.setSpeed(pwmFR);

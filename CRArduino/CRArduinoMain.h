@@ -11,6 +11,7 @@
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
 	#include "Servo.h"
+	#include "PID_v1.h"
 #else
 	#include "WProgram.h"
 #endif
