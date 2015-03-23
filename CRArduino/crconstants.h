@@ -51,7 +51,7 @@
 //back right = 95.02
 //back left = 93.9
 //front 92.95
-#define DRIVE_SHAFT_RADIUS 220
+#define DRIVE_SHAFT_RADIUS 220.0
 //420 for back
 //x1 33(1/3)in
 //y2 7(3/16)in

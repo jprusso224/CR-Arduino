@@ -110,8 +110,8 @@ void CRArduinoMain::processDriveCommand(){
 	
 	String targetString = "";
 	int driveDistance = 0;
-	int driveAngle = 0;
-	int targetAngle = 0;
+	double driveAngle = 0;
+	double targetAngle = 0;
 	long int startCount = 0L;
 	long int targetCount = 0L;
 	char fromCR = NULL;
@@ -185,20 +185,20 @@ void CRArduinoMain::processDriveCommand(){
 				targetString = piInputString.substring(3,5);
 				driveAngle = targetString.toInt();
 				
-				motorSpeed = 100;
+				motorSpeed = 255;
 				//Set Drive target
-				targetAngle = orientation + int(driveAngle*1000*(PI/180)); //watch for overflow
+				targetAngle = orientation + (driveAngle*1000*(PI/180.0)); //watch for overflow
 	
 				//loop
 				while(orientation < targetAngle){
 					
-					delay(100);
-						frontLeftDistance = -frontLeftEncoder.getDistanceTraveled();
+					delay(25);
+						frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 						frontRightDistance = frontRightEncoder.getDistanceTraveled();
 						Serial.println("FL: " + (String)frontLeftDistance);
 						Serial.println("FR: " + (String)frontRightDistance);
 					
-					frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() + frontRightEncoder.getDistanceTraveled())/2;
+					frontDistanceAvg = (frontLeftEncoder.getDistanceTraveled() - frontRightEncoder.getDistanceTraveled())/2;
 					//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
 					orientation = ((frontDistanceAvg*1000)/DRIVE_SHAFT_RADIUS);
 					Serial.println("O: " + (String)orientation);
@@ -251,10 +251,10 @@ void CRArduinoMain::processDriveCommand(){
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
 				if(driveCounter == 3){
-				Serial.println("FLD:" +  String(frontLeftDistance));
-				Serial.println("FRD:" +  String(frontRightDistance));
-				Serial.println("BLD:" +  String(backLeftDistance));
-				Serial.println("BRD:" +  String(backRightDistance));
+				Serial.println("$DFLD:" +  String(frontLeftDistance));
+				Serial.println("$DFRD:" +  String(frontRightDistance));
+				Serial.println("$DBLD:" +  String(backLeftDistance));
+				Serial.println("$DBRD:" +  String(backRightDistance));
 				}
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
@@ -293,10 +293,10 @@ void CRArduinoMain::processDriveCommand(){
 				speedFR = ((deltaFrontRightDistance*1000)/deltaTime);
 				
 				if(driveCounter == 3){
-					Serial.println("FLS: " + (String)(speedFL));
-					Serial.println("FRS: " + (String)(speedFR));
-					Serial.println("pwmL: " + (String)(pwmFL));
-					Serial.println("pwmR: " + (String)(pwmFR));
+					Serial.println("$DFLS: " + (String)(speedFL));
+					Serial.println("$DFRS: " + (String)(speedFR));
+					Serial.println("$DpwmL: " + (String)(pwmFL));
+					Serial.println("$DpwmR: " + (String)(pwmFR));
 				//	Serial.println("FLDD: " + (String)(deltaFrontLeftDistance));
 				//	Serial.println("FRDD: " + (String)(deltaFrontRightDistance));
 				//	Serial.println("DT: " +  (String)(deltaTime));
@@ -346,10 +346,7 @@ void CRArduinoMain::processDriveCommand(){
 		    break;
 	}
 	delay(200);
-	Serial.println("FLD:" +  String(frontLeftDistance));
-	Serial.println("FRD:" +  String(frontRightDistance));
-	Serial.println("BLD:" +  String(backLeftDistance));
-	Serial.println("BRD:" +  String(backRightDistance));
+
 	Serial.print("$DP\n"); 
 	Serial.flush();
 }
