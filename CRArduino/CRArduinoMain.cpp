@@ -135,7 +135,7 @@ void CRArduinoMain::processDriveCommand(){
 	double pwmFL = 0;
 	double pwmFR = 0;
 	unsigned long currTime = 0;
-	unsigned long deltaTime = 0;
+	double deltaTime = 0;
 	double desiredSpeed = DRIVE_SPEED;
 	int driveCounter = 0;
 	
@@ -247,8 +247,8 @@ void CRArduinoMain::processDriveCommand(){
 		default:
 			
 			//Declare
-			PID pidFL(&speedFL,&pwmFL,&desiredSpeed,0.25,0.5,0.01,DIRECT);
-			PID pidFR(&speedFR,&pwmFR,&desiredSpeed,0.25,0.5,0.01,DIRECT);
+			PID pidFL(&speedFL,&pwmFL,&desiredSpeed,0.5,0.1,0.01,DIRECT);
+			PID pidFR(&speedFR,&pwmFR,&desiredSpeed,0.5,0.1,0.01,DIRECT);
 			pidFL.SetMode(AUTOMATIC);
 			pidFR.SetMode(AUTOMATIC);
 			rightMotor.setDirection(MOTOR_CW);
@@ -283,10 +283,10 @@ void CRArduinoMain::processDriveCommand(){
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
 				if(driveCounter == 3){
-				Serial.println("$DFLD:" +  String(frontLeftDistance));
-				Serial.println("$DFRD:" +  String(frontRightDistance));
-				Serial.println("$DBLD:" +  String(backLeftDistance));
-				Serial.println("$DBRD:" +  String(backRightDistance));
+				//Serial.println("$DFLD:" +  String(frontLeftDistance));
+				//Serial.println("$DFRD:" +  String(frontRightDistance));
+				//Serial.println("$DBLD:" +  String(backLeftDistance));
+				//Serial.println("$DBRD:" +  String(backRightDistance));
 				}
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
@@ -315,23 +315,24 @@ void CRArduinoMain::processDriveCommand(){
 				crDriveState.setPrevFREncoderDistance(frontRightDistance);
 				crDriveState.setPrevFLEncoderDistance(frontLeftDistance);
 				
-				currTime = millis();
-				deltaTime = currTime - crDriveState.getLastTime();
+				currTime = micros();
+				deltaTime = (double)(currTime - crDriveState.getLastTime())/1000.0;
 				crDriveState.setNewTime(currTime);
 				
 				//Serial.println("DT: " + (String)deltaTime);
 				
-				speedFL = ((deltaFrontLeftDistance*1000)/deltaTime);
-				speedFR = ((deltaFrontRightDistance*1000)/deltaTime);
+				speedFL = ((deltaFrontLeftDistance*1000.0)/deltaTime);
+				speedFR = ((deltaFrontRightDistance*1000.0)/deltaTime);
 				
 				if(driveCounter == 3){
-					Serial.println("$DFLS: " + (String)(speedFL));
-					Serial.println("$DFRS: " + (String)(speedFR));
-					Serial.println("$DpwmL: " + (String)(pwmFL));
-					Serial.println("$DpwmR: " + (String)(pwmFR));
-				//	Serial.println("FLDD: " + (String)(deltaFrontLeftDistance));
-				//	Serial.println("FRDD: " + (String)(deltaFrontRightDistance));
-				//	Serial.println("DT: " +  (String)(deltaTime));
+					//Serial.println("$DFLS: " + (String)(speedFL));
+					//Serial.println("$DFRS: " + (String)(speedFR));
+					//Serial.println("$DpwmL: " + (String)(pwmFL));
+					//Serial.println("$DpwmR: " + (String)(pwmFR));
+					
+					//Serial.println("$FLDD: " + (String)(deltaFrontLeftDistance));
+					//Serial.println("$FRDD: " + (String)(deltaFrontRightDistance));
+					//Serial.println("$DT: " +  (String)(deltaTime));
 				
 					driveCounter = 0;
 					
