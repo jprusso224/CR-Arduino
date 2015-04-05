@@ -66,6 +66,7 @@ class CRArduinoMain
 	void processStatusRequest();
 	void blinkLED(int num);
 	void processImageCommand();
+	void processTransitionCommand();
 };
 
 extern CRArduinoMain crArduinoMain;

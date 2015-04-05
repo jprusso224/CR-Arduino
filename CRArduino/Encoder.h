@@ -30,6 +30,7 @@ class Encoder
 	int getPulseCount();
 	void enableEncoder();
 	void disableEncoder();
+	void setPulseCount(int cnt);
 };
 
 #endif

@@ -257,6 +257,11 @@ void CRArduinoMain::processDriveCommand(){
 			leftMotor.setSpeed(0);
 			
 			targetString = piInputString.substring(3,6);
+			if (targetString == "TRA")
+			{
+				processTransitionCommand();
+				return;
+			}
 		
 			driveDistance = targetString.toInt();
 			
@@ -276,7 +281,14 @@ void CRArduinoMain::processDriveCommand(){
 				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 				frontRightDistance = frontRightEncoder.getDistanceTraveled();
 				frontDistanceAvg = (frontLeftDistance + frontRightDistance)/2;
-				distanceTraveled = rearDistanceAvg;// + frontDistanceAvg)/2;
+				if(piInputString.substring(6,7) == "F") //Front Encoders
+				{
+					distanceTraveled = frontDistanceAvg;	
+				}
+				else
+				{
+					distanceTraveled = rearDistanceAvg;
+				}
 			    //distanceTraveled = frontRightEncoder.getDistanceTraveled();
 				relativeDistance = distanceTraveled - startDistance;
 				//Serial.println("PL:" +  String(currPulseCount));
@@ -457,6 +469,59 @@ void CRArduinoMain::blinkLED(int num){
 		digitalWrite(13,LOW);
 		delay(250);
 	}
+}
+
+void CRArduinoMain::processTransitionCommand(){
+	int deltaFrontLeftDistance = 0;
+	int deltaFrontRightDistance = 0;
+	//get initial pulse count
+	int pulseCntR = backRightEncoder.getPulseCount();
+	int pulseCntL = backLeftEncoder.getPulseCount();
+	//make it go backward
+	rightMotor.setDirection(MOTOR_CCW);
+	leftMotor.setDirection(MOTOR_CW);
+	int motorSpeed = 100;
+	rightMotor.setSpeed(motorSpeed);
+	leftMotor.setSpeed(motorSpeed);
+	
+	// declare needed variables
+	int backLeftDistance = backLeftEncoder.getDistanceTraveled();
+	int backRightDistance = backRightEncoder.getDistanceTraveled();
+	int deltaBackLeftDistance, deltaBackRightDistance;
+	long int currTime;
+	long int deltaTime;
+	float speedBL, speedBR;
+	
+	//determine speed
+	deltaBackLeftDistance = backLeftDistance - crDriveState.getPrevBLEncoderDistance();
+	deltaBackRightDistance = backRightDistance - crDriveState.getPrevBREncoderDistance();
+	crDriveState.setPrevBREncoderDistance(backRightDistance);
+	crDriveState.setPrevBLEncoderDistance(backLeftDistance);
+	currTime = micros();
+	deltaTime = (double)(currTime - crDriveState.getLastTime())/1000.0;
+	crDriveState.setNewTime(currTime);
+	speedBL = ((deltaFrontLeftDistance*1000.0)/deltaTime);
+	speedBR = ((deltaFrontRightDistance*1000.0)/deltaTime);
+	
+	//once the speed is zero, exit command
+	while((speedBL+speedBR)/2 > 0.01){ // might change this threshold
+		//determine speed
+		deltaBackLeftDistance = backLeftDistance - crDriveState.getPrevBLEncoderDistance();
+		deltaBackRightDistance = backRightDistance - crDriveState.getPrevBREncoderDistance();
+		crDriveState.setPrevBREncoderDistance(backRightDistance);
+		crDriveState.setPrevBLEncoderDistance(backLeftDistance);
+		currTime = micros();
+		deltaTime = (double)(currTime - crDriveState.getLastTime())/1000.0;
+		crDriveState.setNewTime(currTime);
+		speedBL = ((deltaFrontLeftDistance*1000.0)/deltaTime);
+		speedBR = ((deltaFrontRightDistance*1000.0)/deltaTime);
+		//once the speed is zero, exit command
+	}
+	
+	// keep pulse count from before
+	frontRightEncoder.setPulseCount(pulseCntR);
+	frontLeftEncoder.setPulseCount(pulseCntL);
+	Serial.println("$DTP"); //it's done it!
 }
 
 /**

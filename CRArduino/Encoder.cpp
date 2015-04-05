@@ -70,3 +70,6 @@ void Encoder::enableEncoder(){
 void Encoder::disableEncoder(){
 	enabled = false;
 }
+void Encoder::setPulseCount(int cnt){
+	pulseCount = cnt;
+}
