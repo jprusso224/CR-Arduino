@@ -283,10 +283,12 @@ void CRArduinoMain::processDriveCommand(){
 				frontDistanceAvg = (frontLeftDistance + frontRightDistance)/2;
 				if(piInputString.substring(6,7) == "F") //Front Encoders
 				{
+					digitalWrite(13, HIGH);  //WHY YOU NO WORK?!
 					distanceTraveled = frontDistanceAvg;	
 				}
 				else
 				{
+					digitalWrite(13, LOW);
 					distanceTraveled = rearDistanceAvg;
 				}
 			    //distanceTraveled = frontRightEncoder.getDistanceTraveled();
