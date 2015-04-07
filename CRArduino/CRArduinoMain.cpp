@@ -95,7 +95,17 @@ void CRArduinoMain::parseCommand(){
 		processRappelCommand();
 		break;
 		case 'D':
-		processDriveCommand();
+		if(piInputString[2] == 'T'){
+			if(piInputString[3] == 'G'){
+				manualDriveOn();
+			}else if(piInputString[3] == 'S'){
+				manaulDriveOff();
+			}else{
+				processTransitionCommand();
+			}
+		}else{
+			processDriveCommand();
+		}
 		break;
 		case 'I':
 		processImageCommand();
@@ -281,7 +291,7 @@ void CRArduinoMain::processDriveCommand(){
 				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 				frontRightDistance = frontRightEncoder.getDistanceTraveled();
 				frontDistanceAvg = (frontLeftDistance + frontRightDistance)/2;
-				if(piInputString.substring(6,7) == "F") //Front Encoders
+				if(piInputString[6] == 'F') //Front Encoders
 				{
 					digitalWrite(13, HIGH);  //WHY YOU NO WORK?!
 					distanceTraveled = frontDistanceAvg;	
@@ -482,7 +492,7 @@ void CRArduinoMain::processTransitionCommand(){
 	//make it go backward
 	rightMotor.setDirection(MOTOR_CCW);
 	leftMotor.setDirection(MOTOR_CW);
-	int motorSpeed = 100;
+	int motorSpeed = 70;
 	rightMotor.setSpeed(motorSpeed);
 	leftMotor.setSpeed(motorSpeed);
 	
@@ -524,6 +534,20 @@ void CRArduinoMain::processTransitionCommand(){
 	frontRightEncoder.setPulseCount(pulseCntR);
 	frontLeftEncoder.setPulseCount(pulseCntL);
 	Serial.println("$DTP"); //it's done it!
+}
+
+void CRArduinoMain::manualDriveOn(){
+	leftMotor.setDirection(MOTOR_CCW);
+	rightMotor.setDirection(MOTOR_CW);
+	leftMotor.setSpeed(50);
+	rightMotor.setSpeed(50);
+	Serial.print("$DTP\n");
+}
+
+void CRArduinoMain::manaulDriveOff(){
+	leftMotor.setSpeed(0);
+	rightMotor.setSpeed(0);
+	Serial.print("$DTP\n");
 }
 
 /**
