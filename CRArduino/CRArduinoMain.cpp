@@ -484,49 +484,39 @@ void CRArduinoMain::blinkLED(int num){
 }
 
 void CRArduinoMain::processTransitionCommand(){
-	int deltaFrontLeftDistance = 0;
-	int deltaFrontRightDistance = 0;
+	int deltaBackLeftDistance = 99;
+	int deltaBackRightDistance = 99;
+	int deltaDistAvg = 99;
 	//get initial pulse count
 	int pulseCntR = backRightEncoder.getPulseCount();
 	int pulseCntL = backLeftEncoder.getPulseCount();
 	//make it go backward
 	rightMotor.setDirection(MOTOR_CCW);
 	leftMotor.setDirection(MOTOR_CW);
-	int motorSpeed = 70;
+	int motorSpeed = 50;
 	rightMotor.setSpeed(motorSpeed);
 	leftMotor.setSpeed(motorSpeed);
 	
 	// declare needed variables
 	int backLeftDistance = backLeftEncoder.getDistanceTraveled();
 	int backRightDistance = backRightEncoder.getDistanceTraveled();
-	int deltaBackLeftDistance, deltaBackRightDistance;
-	long int currTime;
-	long int deltaTime;
-	float speedBL, speedBR;
 	
 	//determine speed
 	deltaBackLeftDistance = backLeftDistance - crDriveState.getPrevBLEncoderDistance();
 	deltaBackRightDistance = backRightDistance - crDriveState.getPrevBREncoderDistance();
+	deltaDistAvg = (deltaBackLeftDistance + deltaBackRightDistance)/2;
 	crDriveState.setPrevBREncoderDistance(backRightDistance);
 	crDriveState.setPrevBLEncoderDistance(backLeftDistance);
-	currTime = micros();
-	deltaTime = (double)(currTime - crDriveState.getLastTime())/1000.0;
-	crDriveState.setNewTime(currTime);
-	speedBL = ((deltaFrontLeftDistance*1000.0)/deltaTime);
-	speedBR = ((deltaFrontRightDistance*1000.0)/deltaTime);
 	
 	//once the speed is zero, exit command
-	while((speedBL+speedBR)/2 > 0.01){ // might change this threshold
+	while(deltaDistAvg > 1){ // might change this threshold
+		delay(50);
 		//determine speed
 		deltaBackLeftDistance = backLeftDistance - crDriveState.getPrevBLEncoderDistance();
 		deltaBackRightDistance = backRightDistance - crDriveState.getPrevBREncoderDistance();
 		crDriveState.setPrevBREncoderDistance(backRightDistance);
 		crDriveState.setPrevBLEncoderDistance(backLeftDistance);
-		currTime = micros();
-		deltaTime = (double)(currTime - crDriveState.getLastTime())/1000.0;
-		crDriveState.setNewTime(currTime);
-		speedBL = ((deltaFrontLeftDistance*1000.0)/deltaTime);
-		speedBR = ((deltaFrontRightDistance*1000.0)/deltaTime);
+		deltaDistAvg = (deltaBackLeftDistance+deltaBackRightDistance)/2;
 		//once the speed is zero, exit command
 	}
 	
