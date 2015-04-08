@@ -99,7 +99,7 @@ void CRArduinoMain::parseCommand(){
 			if(piInputString[3] == 'G'){
 				manualDriveOn();
 			}else if(piInputString[3] == 'S'){
-				manaulDriveOff();
+				manualDriveOff();
 			}else{
 				processTransitionCommand();
 			}
@@ -493,10 +493,13 @@ void CRArduinoMain::processTransitionCommand(){
 	//make it go backward
 	rightMotor.setDirection(MOTOR_CCW);
 	leftMotor.setDirection(MOTOR_CW);
-	int motorSpeed = 50;
+	int motorSpeed = 70;
 	rightMotor.setSpeed(motorSpeed);
 	leftMotor.setSpeed(motorSpeed);
-	
+	delay(7000);
+	rightMotor.setSpeed(0);
+	leftMotor.setSpeed(0);
+	/*
 	// declare needed variables
 	int backLeftDistance = backLeftEncoder.getDistanceTraveled();
 	int backRightDistance = backRightEncoder.getDistanceTraveled();
@@ -509,7 +512,7 @@ void CRArduinoMain::processTransitionCommand(){
 	crDriveState.setPrevBLEncoderDistance(backLeftDistance);
 	
 	//once the speed is zero, exit command
-	while(deltaDistAvg > 1){ // might change this threshold
+	while(deltaDistAvg > 2){ // might change this threshold
 		delay(50);
 		//determine speed
 		deltaBackLeftDistance = backLeftDistance - crDriveState.getPrevBLEncoderDistance();
@@ -518,12 +521,12 @@ void CRArduinoMain::processTransitionCommand(){
 		crDriveState.setPrevBLEncoderDistance(backLeftDistance);
 		deltaDistAvg = (deltaBackLeftDistance+deltaBackRightDistance)/2;
 		//once the speed is zero, exit command
-	}
+	}*/
 	
 	// keep pulse count from before
 	frontRightEncoder.setPulseCount(pulseCntR);
 	frontLeftEncoder.setPulseCount(pulseCntL);
-	Serial.println("$DTP"); //it's done it!
+	Serial.println("$DP"); //it's done it!
 }
 
 void CRArduinoMain::manualDriveOn(){
@@ -531,13 +534,13 @@ void CRArduinoMain::manualDriveOn(){
 	rightMotor.setDirection(MOTOR_CW);
 	leftMotor.setSpeed(50);
 	rightMotor.setSpeed(50);
-	Serial.print("$DTP\n");
+	Serial.print("$DP\n");
 }
 
-void CRArduinoMain::manaulDriveOff(){
+void CRArduinoMain::manualDriveOff(){
 	leftMotor.setSpeed(0);
 	rightMotor.setSpeed(0);
-	Serial.print("$DTP\n");
+	Serial.print("$DP\n");
 }
 
 /**

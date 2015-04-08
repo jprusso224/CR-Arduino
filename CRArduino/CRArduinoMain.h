@@ -68,7 +68,7 @@ class CRArduinoMain
 	void processImageCommand();
 	void processTransitionCommand();
 	void manualDriveOn();
-	void manaulDriveOff();
+	void manualDriveOff();
 };
 
 extern CRArduinoMain crArduinoMain;
