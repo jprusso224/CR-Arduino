@@ -526,14 +526,14 @@ void CRArduinoMain::processTransitionCommand(){
 	// keep pulse count from before
 	frontRightEncoder.setPulseCount(pulseCntR);
 	frontLeftEncoder.setPulseCount(pulseCntL);
-	Serial.println("$DP"); //it's done it!
+	Serial.print("$DP\n"); //it's done it!
 }
 
 void CRArduinoMain::manualDriveOn(){
 	leftMotor.setDirection(MOTOR_CCW);
 	rightMotor.setDirection(MOTOR_CW);
-	leftMotor.setSpeed(30);
-	rightMotor.setSpeed(30);
+	leftMotor.setSpeed(55);
+	rightMotor.setSpeed(50);
 	Serial.print("$DP\n");
 }
 
