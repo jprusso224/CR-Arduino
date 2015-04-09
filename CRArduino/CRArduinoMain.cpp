@@ -532,8 +532,8 @@ void CRArduinoMain::processTransitionCommand(){
 void CRArduinoMain::manualDriveOn(){
 	leftMotor.setDirection(MOTOR_CCW);
 	rightMotor.setDirection(MOTOR_CW);
-	leftMotor.setSpeed(50);
-	rightMotor.setSpeed(50);
+	leftMotor.setSpeed(30);
+	rightMotor.setSpeed(30);
 	Serial.print("$DP\n");
 }
 
