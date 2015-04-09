@@ -63,6 +63,7 @@ class CRArduinoMain
 	void parseCommand();
 	void processDriveCommand();
 	void processRappelCommand();
+	void processAutoRappelCommand();
 	void processStatusRequest();
 	void blinkLED(int num);
 	void processImageCommand();
