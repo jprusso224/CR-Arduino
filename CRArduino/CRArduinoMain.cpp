@@ -92,11 +92,7 @@ void CRArduinoMain::parseCommand(){
 	commandType = piInputString[1];
 	switch(commandType){
 		case 'R':
-			if(piInputString[2] == 'A'){
-				processAutoRappelCommand();
-			}else{
-				processRappelCommand();
-			}
+		processRappelCommand();
 		break;
 		case 'D':
 		if(piInputString[2] == 'T'){
@@ -445,27 +441,6 @@ void CRArduinoMain::processRappelCommand(){
 		Serial.flush();
 		
 }
-
-void CRArduinoMain::processAutoRappelCommand(){
-	//Declare variables
-	int range = 0;
-	String depthStr = "";
-	
-	//Read range
-	range = rangeFinder.readRange();
-	
-	//Convert depth to string and send to serial port.
-	depthStr = String(range);
-	if(depthStr.length() == 3){
-		Serial.print("$RP"+depthStr+"\n");
-		}else if(depthStr.length() == 2){
-		Serial.print("$RP0"+depthStr+"\n");
-		}else{
-		Serial.print("$RP00"+depthStr+"\n");
-	}
-	Serial.flush();
-}
-
 
 void CRArduinoMain::processStatusRequest(){
 		blinkLED(3);
