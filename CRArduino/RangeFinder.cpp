@@ -7,7 +7,7 @@
 
 #include "RangeFinder.h"
 
-void RangeFinder::initRangeFinder(int resolution,int rangePin)
+void RangeFinder::initRangeFinder(float resolution,int rangePin)
 {
 	_resolution = resolution;
 	_rangePin = rangePin;

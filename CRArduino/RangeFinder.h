@@ -18,11 +18,11 @@
 class RangeFinder{
  protected:
 	int range;
-	int _resolution;
+	float _resolution;
 	int _rangePin;
 
  public:
-	void initRangeFinder(int resolution,int rangePin);
+	void initRangeFinder(float resolution,int rangePin);
 	int readRange();
 	int readAnRange();
 };

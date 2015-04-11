@@ -92,7 +92,11 @@ void CRArduinoMain::parseCommand(){
 	commandType = piInputString[1];
 	switch(commandType){
 		case 'R':
-		processRappelCommand();
+		if(piInputString[2] == 'D'){
+			processAutoRappelCommand();
+		}else{
+		    processRappelCommand();
+		}
 		break;
 		case 'D':
 		if(piInputString[2] == 'T'){
@@ -307,10 +311,10 @@ void CRArduinoMain::processDriveCommand(){
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
 				if(driveCounter == 3){
-				//Serial.println("$DFLD:" +  String(frontLeftDistance));
-				//Serial.println("$DFRD:" +  String(frontRightDistance));
-				//Serial.println("$DBLD:" +  String(backLeftDistance));
-				//Serial.println("$DBRD:" +  String(backRightDistance));
+				Serial.println("$DFLD:" +  String(frontLeftDistance));
+				Serial.println("$DFRD:" +  String(frontRightDistance));
+				Serial.println("$DBLD:" +  String(backLeftDistance));
+				Serial.println("$DBRD:" +  String(backRightDistance));
 				}
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
@@ -349,10 +353,10 @@ void CRArduinoMain::processDriveCommand(){
 				speedFR = ((deltaFrontRightDistance*1000.0)/deltaTime);
 				
 				if(driveCounter == 3){
-					//Serial.println("$DFLS: " + (String)(speedFL));
-					//Serial.println("$DFRS: " + (String)(speedFR));
-					//Serial.println("$DpwmL: " + (String)(pwmFL));
-					//Serial.println("$DpwmR: " + (String)(pwmFR));
+					Serial.println("$DFLS: " + (String)(speedFL));
+					Serial.println("$DFRS: " + (String)(speedFR));
+					Serial.println("$DpwmL: " + (String)(pwmFL));
+					Serial.println("$DpwmR: " + (String)(pwmFR));
 					
 					//Serial.println("$FLDD: " + (String)(deltaFrontLeftDistance));
 					//Serial.println("$FRDD: " + (String)(deltaFrontRightDistance));
@@ -446,7 +450,7 @@ void CRArduinoMain::processRappelCommand(){
 void CRArduinoMain::processAutoRappelCommand(){
 	
 	//Declare variables
-	int range = 0;
+	int range = 5;
 	String depthStr = "";
 
 	//Read range-finder (may want an average for the beginning of rappel stage.)
@@ -546,8 +550,8 @@ void CRArduinoMain::processTransitionCommand(){
 	}*/
 	
 	// keep pulse count from before
-	frontRightEncoder.setPulseCount(pulseCntR);
-	frontLeftEncoder.setPulseCount(pulseCntL);
+	frontRightEncoder.setPulseCount(0);
+	frontLeftEncoder.setPulseCount(0);
 	Serial.print("$DP\n"); //it's done it!
 }
 
