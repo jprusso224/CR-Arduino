@@ -45,6 +45,8 @@ void CRArduinoMain::setup()
 	//Servos
 	tiltServo.attach(TILT_SERVO_PIN);
 	panServo.attach(PAN_SERVO_PIN);
+	tiltServo.write(5);
+	panServo.write(90);
 	
 	//setup LED
 	pinMode(13,OUTPUT);
@@ -475,17 +477,21 @@ void CRArduinoMain::processStatusRequest(){
 }
 
 void CRArduinoMain::processImageCommand(){
-	String temp = piInputString.substring(3,4);
+	String temp = piInputString.substring(3,5);
 	float pan = temp.toInt();
-	temp = piInputString.substring(5,6);
+	temp = piInputString.substring(5,7);
 	float tilt = temp.toInt();
 	if (piInputString[2] == '+'){
+		pan += 90;
+	}
+	else{
+		pan = -pan;
 		pan += 90;
 	}
 	// pan ranging from 0-180 but input 0 or +/-90 so 0 = 90 here
 	// tilt ranging from 0-90
 	tilt = 650+(885/90)*tilt;
-	pan = 950+(47.5/90)*pan;
+	pan = 950+(487.5/90)*pan;
 	panServo.write(pan);
 	delay(15);
 	tiltServo.write(tilt);
@@ -552,6 +558,8 @@ void CRArduinoMain::processTransitionCommand(){
 	// keep pulse count from before
 	frontRightEncoder.setPulseCount(0);
 	frontLeftEncoder.setPulseCount(0);
+	backRightEncoder.setPulseCount(0);
+	backLeftEncoder.setPulseCount(0);
 	Serial.print("$DP\n"); //it's done it!
 }
 
@@ -589,4 +597,3 @@ void CRArduinoMain::frontRightEncoderISR(){
 }
 
 CRArduinoMain crArduinoMain;
-
