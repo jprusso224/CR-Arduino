@@ -562,7 +562,7 @@ void CRArduinoMain::processTransitionCommand(){
 	backLeftEncoder.setPulseCount(0);
 	distanceTraveled = 0;
 	Serial.print("$DP\n"); //it's done it!
-	
+	Serial.flush();
 }
 
 void CRArduinoMain::manualDriveOn(){
