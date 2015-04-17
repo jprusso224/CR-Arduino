@@ -560,7 +560,9 @@ void CRArduinoMain::processTransitionCommand(){
 	frontLeftEncoder.setPulseCount(0);
 	backRightEncoder.setPulseCount(0);
 	backLeftEncoder.setPulseCount(0);
+	distanceTraveled = 0;
 	Serial.print("$DP\n"); //it's done it!
+	
 }
 
 void CRArduinoMain::manualDriveOn(){
