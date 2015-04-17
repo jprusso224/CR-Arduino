@@ -174,8 +174,8 @@ void CRArduinoMain::processDriveCommand(){
 			motorSpeed = 255;
 			//Set Drive target
 			targetAngle = orientation - ((double)driveAngle*1000.0*(PI/180.0)); //Both need to be in mm.
-			Serial.println("DO: " + (String)driveAngle);
-			Serial.println("TO: " + (String)targetAngle);
+			//Serial.println("DO: " + (String)driveAngle);
+			//Serial.println("TO: " + (String)targetAngle);
 			
 			//loop
 			while(orientation > targetAngle){ 
@@ -183,14 +183,14 @@ void CRArduinoMain::processDriveCommand(){
 				delay(25);
 				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 				frontRightDistance = frontRightEncoder.getDistanceTraveled();
-				Serial.println("FL: " + (String)frontLeftDistance);
-				Serial.println("FR: " + (String)frontRightDistance);
+				//Serial.println("FL: " + (String)frontLeftDistance);
+				//Serial.println("FR: " + (String)frontRightDistance);
 				
 				turnDistAvg = (frontLeftEncoder.getDistanceTraveled() - frontRightEncoder.getDistanceTraveled())/2.0;
 				//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
 				orientation = ((turnDistAvg*1000.0)/DRIVE_SHAFT_RADIUS/TURN_SCALE);
 				
-				Serial.println("O: " + (String)orientation);
+				//Serial.println("O: " + (String)orientation);
 				
 				rightMotor.setSpeed(motorSpeed);
 				leftMotor.setSpeed(motorSpeed);
@@ -200,11 +200,11 @@ void CRArduinoMain::processDriveCommand(){
 			delay(200);
 			frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 			frontRightDistance = frontRightEncoder.getDistanceTraveled();
-			Serial.println("FL: " + (String)frontLeftDistance);
-			Serial.println("FR: " + (String)frontRightDistance);
+			//Serial.println("FL: " + (String)frontLeftDistance);
+			//Serial.println("FR: " + (String)frontRightDistance);
 			turnDistAvg = (frontLeftEncoder.getDistanceTraveled() - frontRightEncoder.getDistanceTraveled())/2.0;
 			orientation = ((turnDistAvg*1000.0)/DRIVE_SHAFT_RADIUS/TURN_SCALE);
-			Serial.println("O: " + (String)orientation);
+			//Serial.println("O: " + (String)orientation);
 			//Turn on back encoders
 			backLeftEncoder.enableEncoder();
 			backRightEncoder.enableEncoder();
@@ -224,21 +224,21 @@ void CRArduinoMain::processDriveCommand(){
 				motorSpeed = 255;
 				//Set Drive target
 				targetAngle = orientation + ((double)driveAngle*1000.0*(PI/180.0)); //watch for overflow
-				Serial.println("DO: " + (String)driveAngle);
-				Serial.println("TO: " + (String)targetAngle);
+				//Serial.println("DO: " + (String)driveAngle);
+				//Serial.println("TO: " + (String)targetAngle);
 				//loop
 				while(orientation < targetAngle){
 					
 					delay(25);
 						frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 						frontRightDistance = frontRightEncoder.getDistanceTraveled();
-						Serial.println("FL: " + (String)frontLeftDistance);
-						Serial.println("FR: " + (String)frontRightDistance);
+						//Serial.println("FL: " + (String)frontLeftDistance);
+						//Serial.println("FR: " + (String)frontRightDistance);
 					
 					turnDistAvg = (frontLeftEncoder.getDistanceTraveled() - frontRightEncoder.getDistanceTraveled())/2.0;
 					//convert distance (arc length) to angle using the radius to the wheels S = r*theta, solve for theta (rad)
 					orientation = ((turnDistAvg*1000.0)/DRIVE_SHAFT_RADIUS/TURN_SCALE);
-					Serial.println("O: " + (String)orientation);
+					//Serial.println("O: " + (String)orientation);
 					rightMotor.setSpeed(motorSpeed);
 					leftMotor.setSpeed(motorSpeed);
 				}
@@ -247,11 +247,11 @@ void CRArduinoMain::processDriveCommand(){
 				delay(200);
 				frontLeftDistance = frontLeftEncoder.getDistanceTraveled();
 				frontRightDistance = frontRightEncoder.getDistanceTraveled();
-				Serial.println("FL: " + (String)frontLeftDistance);
-				Serial.println("FR: " + (String)frontRightDistance);
+				//Serial.println("FL: " + (String)frontLeftDistance);
+				//Serial.println("FR: " + (String)frontRightDistance);
 				turnDistAvg = (frontLeftEncoder.getDistanceTraveled() - frontRightEncoder.getDistanceTraveled())/2.0;
 				orientation = ((turnDistAvg*1000.0)/DRIVE_SHAFT_RADIUS/TURN_SCALE);
-				Serial.println("O: " + (String)orientation);
+				//Serial.println("O: " + (String)orientation);
 				//Turn on back encoders
 				backLeftEncoder.enableEncoder();
 				backRightEncoder.enableEncoder();
@@ -313,10 +313,10 @@ void CRArduinoMain::processDriveCommand(){
 				currPulseCount = frontRightEncoder.getPulseCount();
 				//Serial.println("PBL:" +  String(currPulseCount));
 				if(driveCounter == 3){
-				Serial.println("$DFLD:" +  String(frontLeftDistance));
-				Serial.println("$DFRD:" +  String(frontRightDistance));
-				Serial.println("$DBLD:" +  String(backLeftDistance));
-				Serial.println("$DBRD:" +  String(backRightDistance));
+				//Serial.println("$DFLD:" +  String(frontLeftDistance));
+				//Serial.println("$DFRD:" +  String(frontRightDistance));
+				//Serial.println("$DBLD:" +  String(backLeftDistance));
+				//Serial.println("$DBRD:" +  String(backRightDistance));
 				}
 				//Serial.println("FR:" + String(frontRightDistance));
 				//Serial.println(relativeDistance);
@@ -355,10 +355,10 @@ void CRArduinoMain::processDriveCommand(){
 				speedFR = ((deltaFrontRightDistance*1000.0)/deltaTime);
 				
 				if(driveCounter == 3){
-					Serial.println("$DFLS: " + (String)(speedFL));
-					Serial.println("$DFRS: " + (String)(speedFR));
-					Serial.println("$DpwmL: " + (String)(pwmFL));
-					Serial.println("$DpwmR: " + (String)(pwmFR));
+					//Serial.println("$DFLS: " + (String)(speedFL));
+					//Serial.println("$DFRS: " + (String)(speedFR));
+					//Serial.println("$DpwmL: " + (String)(pwmFL));
+					//Serial.println("$DpwmR: " + (String)(pwmFR));
 					
 					//Serial.println("$FLDD: " + (String)(deltaFrontLeftDistance));
 					//Serial.println("$FRDD: " + (String)(deltaFrontRightDistance));
