@@ -10,6 +10,9 @@
 #include "RangeFinder.h"
 #include "crconstants.h"
 
+//If defined outputs debugging driving data
+//#define DEBUG 1
+
 
 
 void CRArduinoMain::setup()
@@ -288,7 +291,9 @@ void CRArduinoMain::processDriveCommand(){
 			while(distanceTraveled < targetDistance){
 				delay(50);
 				//Serial.println(distanceTraveled);
-				//currPulseCount = frontLeftEncoder.getPulseCount();
+				#ifdef DEBUG
+				currPulseCount = frontLeftEncoder.getPulseCount();
+				#endif
 				//Serial.println(currPulseCount);
 				//Get distance Traveled via average
 				backLeftDistance = backLeftEncoder.getDistanceTraveled();
@@ -309,18 +314,21 @@ void CRArduinoMain::processDriveCommand(){
 				}
 			    //distanceTraveled = frontRightEncoder.getDistanceTraveled();
 				relativeDistance = distanceTraveled - startDistance;
-				//Serial.println("PL:" +  String(currPulseCount));
+				#ifdef DEBUG
+				Serial.println("PL:" +  String(currPulseCount));
+				#endif
 				currPulseCount = frontRightEncoder.getPulseCount();
-				//Serial.println("PBL:" +  String(currPulseCount));
+				#ifdef DEBUG
+				Serial.println("PBL:" +  String(currPulseCount));
 				if(driveCounter == 3){
-				//Serial.println("$DFLD:" +  String(frontLeftDistance));
-				//Serial.println("$DFRD:" +  String(frontRightDistance));
-				//Serial.println("$DBLD:" +  String(backLeftDistance));
-				//Serial.println("$DBRD:" +  String(backRightDistance));
+				Serial.println("$DFLD:" +  String(frontLeftDistance));
+				Serial.println("$DFRD:" +  String(frontRightDistance));
+				Serial.println("$DBLD:" +  String(backLeftDistance));
+				Serial.println("$DBRD:" +  String(backRightDistance));
 				}
-				//Serial.println("FR:" + String(frontRightDistance));
-				//Serial.println(relativeDistance);
-				
+				Serial.println("FR:" + String(frontRightDistance));
+				Serial.println(relativeDistance);
+				#endif
 				
 				/*
 				//Determine how fast to drive motor
@@ -355,15 +363,15 @@ void CRArduinoMain::processDriveCommand(){
 				speedFR = ((deltaFrontRightDistance*1000.0)/deltaTime);
 				
 				if(driveCounter == 3){
-					//Serial.println("$DFLS: " + (String)(speedFL));
-					//Serial.println("$DFRS: " + (String)(speedFR));
-					//Serial.println("$DpwmL: " + (String)(pwmFL));
-					//Serial.println("$DpwmR: " + (String)(pwmFR));
-					
-					//Serial.println("$FLDD: " + (String)(deltaFrontLeftDistance));
-					//Serial.println("$FRDD: " + (String)(deltaFrontRightDistance));
-					//Serial.println("$DT: " +  (String)(deltaTime));
-				
+					#ifdef DEBUG
+					Serial.println("$DFLS: " + (String)(speedFL));
+					Serial.println("$DFRS: " + (String)(speedFR));
+					Serial.println("$DpwmL: " + (String)(pwmFL));
+					Serial.println("$DpwmR: " + (String)(pwmFR));
+					Serial.println("$FLDD: " + (String)(deltaFrontLeftDistance));
+					Serial.println("$FRDD: " + (String)(deltaFrontRightDistance));
+					Serial.println("$DT: " +  (String)(deltaTime));
+					#endif
 					driveCounter = 0;
 					
 				}
